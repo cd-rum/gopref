@@ -31,10 +31,8 @@ type LogFile struct {
 
 // Stats holds all the server info
 type Stats struct {
-  Alloc uint64
+  HeapReleased uint64
   PDFRoutines uint64
-  TotalAlloc uint64
-  TotalRoutines int
   Sys uint64
 }
 
@@ -238,7 +236,7 @@ func main() {
   mux.HandleFunc("/api/stats", func(w http.ResponseWriter, r *http.Request) {
     var m runtime.MemStats
     runtime.ReadMemStats(&m)
-    stats := Stats{Alloc: bToMb(m.Alloc), PDFRoutines: ops, TotalAlloc: bToMb(m.TotalAlloc), TotalRoutines: runtime.NumGoroutine(), Sys: bToMb(m.Sys)}
+    stats := Stats{PDFRoutines: ops, HeapReleased: bToMb(m.HeapReleased), Sys: bToMb(m.Sys)}
 
     js, err := json.Marshal(stats)
     if err != nil {

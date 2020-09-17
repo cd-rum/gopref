@@ -4,8 +4,7 @@
       <div class="uk-width-expand@m">
 
         <pre>pdf routines: {{ stats.PDFRoutines }}</pre>
-        <pre>total routines: {{ stats.TotalRoutines }}</pre>
-        <pre>allocated: {{ stats.Alloc }}mb / total allocated: {{ stats.TotalAlloc }}mb / system: {{ stats.Sys }}mb</pre>
+        <pre>memory: {{ stats.HeapReleased }}mb / {{ stats.Sys }}mb</pre>
 
         <hr />
 
