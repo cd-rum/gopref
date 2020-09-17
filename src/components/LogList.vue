@@ -3,10 +3,13 @@
     <div uk-grid>
       <div class="uk-width-expand@m">
 
-        <pre>allocated: {{ stats.Alloc }}mb</pre>
-        <pre>total allocated: {{ stats.TotalAlloc }}mb</pre>
-        <pre>system: {{ stats.Sys }}mb</pre>
-        <pre>workers: {{ stats.PDFWorkers }}</pre>
+        <pre>pdf routines: {{ stats.PDFRoutines }}</pre>
+        <pre>total routines: {{ stats.TotalRoutines }}</pre>
+        <pre>
+          allocated: {{ stats.Alloc }}mb /
+          total allocated: {{ stats.TotalAlloc }}mb /
+          system: {{ stats.Sys }}mb
+        </pre>
 
         <hr />
 
