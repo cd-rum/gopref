@@ -2,6 +2,12 @@
   <div id='main'>
     <div uk-grid>
       <div class="uk-width-expand@m">
+
+        <pre>allocated: {{ stats.Alloc }}</pre>
+        <pre>total allocated: {{ stats.TotalAlloc }}</pre>
+        <pre>system: {{ stats.Sys }}</pre>
+        <pre>workers: {{ stats.PDFWorkers }}</pre>
+
         <table class="uk-table">
           <thead>
             <tr>
@@ -28,17 +34,30 @@
     name: 'LogList',
     data () {
       return {
-        logs: []
+        logs: [],
+        stats: {}
       }
     },
     mounted () {
-      this.getLogList()
+      setInterval(() => {
+        this.getLogList()
+        this.getStats()
+      }, 1000)
     },
     methods: {
       getLogList () {
         axios.get('/api/logs')
         .then(res => {
           this.logs = res.data
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      },
+      getStats () {
+        axios.get('/api/stats')
+        .then(res => {
+          this.stats = res.data
         })
         .catch(err => {
           console.log(err)

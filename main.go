@@ -10,6 +10,8 @@ import (
   "os"
   "os/exec"
   "regexp"
+  "runtime"
+  "sync/atomic"
   "time"
 
   "github.com/cheshir/go-mq"
@@ -25,6 +27,14 @@ type Font struct {
 type LogFile struct {
   ID string
   Output string
+}
+
+// Stats holds all the server info
+type Stats struct {
+  Alloc uint64
+  PDFWorkers uint64
+  TotalAlloc uint64
+  Sys uint64
 }
 
 func env() string {
@@ -103,12 +113,18 @@ func writeLog(path string, output string) {
   panic("Output error", err)
 }
 
+func bToMb(b uint64) uint64 {
+    return b / 1024 / 1024
+}
+
 func main() {
   if env() != "dev" {
     writeFontsIndex()
   }
 
   var config mq.Config
+  var ops uint64
+
   err := yaml.Unmarshal([]byte(externalConfig), &config)
   panic("Failed to read config", err)
 
@@ -123,6 +139,7 @@ func main() {
   }()
 
   err = messageQueue.SetConsumerHandler("cmd_call", func(message mq.Message) {
+    atomic.AddUint64(&ops, 1)
     s := string(message.Body())
     cmd := exec.Command("xvfb-run", "-a", "scribus-ng", "-g", "-ns", "-py", "python/export.py", s)
     if env() == "dev" {
@@ -134,6 +151,7 @@ func main() {
 
     logfile := fmt.Sprintf("tmp/log/%s.log", s)
     writeLog(logfile, string(out))
+    atomic.AddUint64(&ops, ops - 1)
     message.Ack(false)
   })
 
@@ -215,6 +233,21 @@ func main() {
     w.Write(js)
   })
 
+  // stats
+  mux.HandleFunc("/api/stats", func(w http.ResponseWriter, r *http.Request) {
+    var m runtime.MemStats
+    runtime.ReadMemStats(&m)
+    stats := Stats{Alloc: bToMb(m.Alloc), PDFWorkers: ops, TotalAlloc: bToMb(m.TotalAlloc), Sys: bToMb(m.Sys)}
+
+    js, err := json.Marshal(stats)
+    if err != nil {
+      http.Error(w, err.Error(), http.StatusInternalServerError)
+      return
+    }
+
+    w.Header().Set("Content-Type", "application/json")
+    w.Write(js)
+  })
   http.ListenAndServe(":4000", mux)
 }
 
