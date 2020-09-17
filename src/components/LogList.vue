@@ -3,9 +3,9 @@
     <div uk-grid>
       <div class="uk-width-expand@m">
 
-        <pre>allocated: {{ stats.Alloc }}</pre>
-        <pre>total allocated: {{ stats.TotalAlloc }}</pre>
-        <pre>system: {{ stats.Sys }}</pre>
+        <pre>allocated: {{ stats.Alloc }}mb</pre>
+        <pre>total allocated: {{ stats.TotalAlloc }}mb</pre>
+        <pre>system: {{ stats.Sys }}mb</pre>
         <pre>workers: {{ stats.PDFWorkers }}</pre>
 
         <table class="uk-table">
@@ -68,6 +68,7 @@
       },
       formatOutput (str) {
         if (str.includes('[pdf]')) return str.split('[pdf]')[1]
+        else if (str.includes('(most recent call last): ')) return str.split('(most recent call last): ')[1]
         else return str
       }
     }
