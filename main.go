@@ -141,7 +141,7 @@ func main() {
   mux := http.NewServeMux()
 
   // documents
-  mux.HandleFunc("/api/documents", func(w http.ResponseWriter, r *http.Request) {
+  mux.HandleFunc("/documents", func(w http.ResponseWriter, r *http.Request) {
     err := r.ParseForm()
     if err != nil {
       return
@@ -163,7 +163,7 @@ func main() {
   })
 
   // logs
-  mux.HandleFunc("/api/logs", func(w http.ResponseWriter, r *http.Request) {
+  mux.HandleFunc("/logs", func(w http.ResponseWriter, r *http.Request) {
     files, err := ioutil.ReadDir("tmp/log")
     panic("Can't read log dir", err)
 
@@ -193,7 +193,7 @@ func main() {
   })
 
   // fonts
-  mux.HandleFunc("/api/fonts", func(w http.ResponseWriter, r *http.Request) {
+  mux.HandleFunc("/fonts", func(w http.ResponseWriter, r *http.Request) {
     file, err := os.Open("tmp/fonts")
     panic("No fonts", err)
 
