@@ -36,7 +36,7 @@
     },
     methods: {
       getLogList () {
-        axios.get('http://localhost:4000/api/logs')
+        axios.get('/api/logs')
         .then(res => {
           this.logs = res.data
         })
