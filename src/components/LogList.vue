@@ -3,7 +3,7 @@
     <div uk-grid>
       <div class="uk-width-expand@m">
 
-        <pre>producing: {{ stats.Queue.length }} ({{ stats.Queue }})</pre>
+        <pre>producing {{ formatProduction(stats.Queue) }}</pre>
         <pre>memory: {{ stats.HeapReleased }}mb / {{ stats.Sys }}mb</pre>
 
         <hr />
@@ -70,6 +70,10 @@
         if (str.includes('[pdf]')) return str.split('[pdf]')[1]
         else if (str.includes('(most recent call last):')) return str.split('(most recent call last):')[1]
         else return str
+      },
+      formatProduction (arr) {
+        if (arr.length) return `${arr.length}: ${arr.join(', ')}`
+        else return arr.length
       }
     }
   }
