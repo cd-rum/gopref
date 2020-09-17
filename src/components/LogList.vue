@@ -3,7 +3,7 @@
     <div uk-grid>
       <div class="uk-width-expand@m">
 
-        <pre>pdf routines: {{ stats.PDFRoutines }}</pre>
+        <pre>producing: {{ stats.Queue.length }} ({{ stats.Queue }})</pre>
         <pre>memory: {{ stats.HeapReleased }}mb / {{ stats.Sys }}mb</pre>
 
         <hr />

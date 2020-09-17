@@ -32,7 +32,7 @@ type LogFile struct {
 // Stats holds all the server info
 type Stats struct {
   HeapReleased uint64
-  PDFRoutines uint64
+  Queue []string
   Sys uint64
 }
 
@@ -116,13 +116,22 @@ func bToMb(b uint64) uint64 {
     return b / 1024 / 1024
 }
 
+func remove(s []string, r string) []string {
+  for i, v := range s {
+    if v == r {
+      return append(s[:i], s[i+1:]...)
+    }
+  }
+  return s
+}
+
 func main() {
   if env() != "dev" {
     writeFontsIndex()
   }
 
   var config mq.Config
-  var ops uint64
+  queue := []string{}
 
   err := yaml.Unmarshal([]byte(externalConfig), &config)
   panic("Failed to read config", err)
@@ -138,8 +147,8 @@ func main() {
   }()
 
   err = messageQueue.SetConsumerHandler("cmd_call", func(message mq.Message) {
-    atomic.AddUint64(&ops, 1)
     s := string(message.Body())
+    queue = append(queue, s)
     cmd := exec.Command("xvfb-run", "-a", "scribus-ng", "-g", "-ns", "-py", "python/export.py", s)
     if env() == "dev" {
       cmd = exec.Command("/Applications/Scribus.app/Contents/MacOS/Scribus", "-g", "-py", "python/export.py", s)
@@ -150,7 +159,8 @@ func main() {
 
     logfile := fmt.Sprintf("tmp/log/%s.log", s)
     writeLog(logfile, string(out))
-    atomic.AddUint64(&ops, ops - 1)
+
+    queue = remove(queue, s)
     message.Ack(false)
   })
 
@@ -236,7 +246,7 @@ func main() {
   mux.HandleFunc("/api/stats", func(w http.ResponseWriter, r *http.Request) {
     var m runtime.MemStats
     runtime.ReadMemStats(&m)
-    stats := Stats{PDFRoutines: ops, HeapReleased: bToMb(m.HeapReleased), Sys: bToMb(m.Sys)}
+    stats := Stats{Queue: queue, HeapReleased: bToMb(m.HeapReleased), Sys: bToMb(m.Sys)}
 
     js, err := json.Marshal(stats)
     if err != nil {
