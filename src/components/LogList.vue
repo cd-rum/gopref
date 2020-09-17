@@ -8,6 +8,8 @@
         <pre>system: {{ stats.Sys }}mb</pre>
         <pre>workers: {{ stats.PDFWorkers }}</pre>
 
+        <hr />
+
         <table class="uk-table">
           <thead>
             <tr>
@@ -68,7 +70,7 @@
       },
       formatOutput (str) {
         if (str.includes('[pdf]')) return str.split('[pdf]')[1]
-        else if (str.includes('(most recent call last): ')) return str.split('(most recent call last): ')[1]
+        else if (str.includes('(most recent call last):')) return str.split('(most recent call last):')[1]
         else return str
       }
     }
