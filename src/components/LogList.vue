@@ -5,11 +5,7 @@
 
         <pre>pdf routines: {{ stats.PDFRoutines }}</pre>
         <pre>total routines: {{ stats.TotalRoutines }}</pre>
-        <pre>
-          allocated: {{ stats.Alloc }}mb /
-          total allocated: {{ stats.TotalAlloc }}mb /
-          system: {{ stats.Sys }}mb
-        </pre>
+        <pre>allocated: {{ stats.Alloc }}mb / total allocated: {{ stats.TotalAlloc }}mb / system: {{ stats.Sys }}mb</pre>
 
         <hr />
 
