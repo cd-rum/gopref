@@ -11,7 +11,6 @@ import (
   "os/exec"
   "regexp"
   "runtime"
-  "sync/atomic"
   "time"
 
   "github.com/cheshir/go-mq"
