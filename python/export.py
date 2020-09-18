@@ -211,7 +211,7 @@ def place_snippet(eps, eps_count, total):
   scribus.moveObjectAbs(eps.x, eps.y, orig)
   x, y = scribus.getPosition(orig)
   w, h = scribus.getSize(orig)
-  print "snippet {0},{1} at {2},{3}".format(w, h, x, y)
+  print "snippet {0},{1} at {2},{3} (aimed for {4},{5}".format(w, h, x, y, eps.x, eps.y)
   delete_excess_pages(total)
 
 def delete_excess_pages(total):
