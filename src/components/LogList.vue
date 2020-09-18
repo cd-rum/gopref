@@ -73,7 +73,7 @@
       },
       formatProduction (arr) {
         if (arr.length) return `${arr.length}: ${arr.join(', ')}`
-        else return arr.length
+        else return 0
       }
     }
   }
