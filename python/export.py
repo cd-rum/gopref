@@ -304,7 +304,7 @@ def main(argv):
     delete_excess_pages(document.total_pages)
 
   for frame in document.frames:
-    if frame.page_number == 'MASTER':
+    if frame.page_number == 0:
       scribus.editMasterPage('MASTER')
     else:
       scribus.gotoPage(frame.page_number)
@@ -433,7 +433,7 @@ def main(argv):
       if frame.frame_style:
         scribus.setFillColor(new_colour(frame.frame_style.colour), key)
 
-    if frame.page_number == 'MASTER': scribus.closeMasterPage()
+    if frame.page_number == 0: scribus.closeMasterPage()
     scribus.applyMasterPage('MASTER', scribus.currentPage())
 
   scribus.saveDoc()
