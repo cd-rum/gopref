@@ -72,7 +72,7 @@
         else return str
       },
       formatProduction (arr) {
-        if (arr) return arr.join(', ')
+        if (arr && arr.length > 0) return arr.join(', ')
         else return `nothing`
       }
     }
