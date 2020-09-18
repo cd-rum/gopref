@@ -72,8 +72,8 @@
         else return str
       },
       formatProduction (arr) {
-        if (arr.length) return `${arr.length}: ${arr.join(', ')}`
-        else return 0
+        if (arr) return arr.join(', ')
+        else return `nothing`
       }
     }
   }
