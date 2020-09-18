@@ -209,7 +209,9 @@ def place_snippet(eps, eps_count, total):
   scribus.applyMasterPage('MASTER', scribus.currentPage())
   orig = scribus.getPageItems()[0][0]
   scribus.moveObjectAbs(eps.x, eps.y, orig)
+  x, y = scribus.getPosition(orig)
   w, h = scribus.getSize(orig)
+  print "snippet {0},{1} at {2},{3}".format(w, h, x, y)
   delete_excess_pages(total)
 
 def delete_excess_pages(total):
