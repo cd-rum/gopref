@@ -458,18 +458,18 @@ def main(argv):
   high.useDocBleeds = True
   high.save()
 
-  if os.environ['MIX_ENV'] != 'dev':
-    upload(low_path, low_key, high_path, high_key)
-    shutil.rmtree(os.path.dirname(low_path))
-    result = { 'pdf_result': {
-      'press_ready_url': high_key, 'low_resolution_url': low_key,
-      'error_code': None, 'created': True
-    } }
-    req = urllib2.Request("{0}/api/v4/documents/{1}/".format(DOMAIN, document_id))
-    req.get_method = lambda: 'PATCH'
-    req.add_header('Authorization', "Bearer {0}".format(token))
-    req.add_header('Content-Type', 'application/json')
-    resp = urllib2.urlopen(req, json.dumps(result)).read()
+  # if os.environ['MIX_ENV'] != 'dev':
+  upload(low_path, low_key, high_path, high_key)
+  shutil.rmtree(os.path.dirname(low_path))
+  result = { 'pdf_result': {
+    'press_ready_url': high_key, 'low_resolution_url': low_key,
+    'error_code': None, 'created': True
+  } }
+  req = urllib2.Request("{0}/api/v4/documents/{1}/".format(DOMAIN, document_id))
+  req.get_method = lambda: 'PATCH'
+  req.add_header('Authorization', "Bearer {0}".format(token))
+  req.add_header('Content-Type', 'application/json')
+  resp = urllib2.urlopen(req, json.dumps(result)).read()
 
   finish = datetime.datetime.now().replace(microsecond = 0)
   interval = (finish - start).total_seconds()

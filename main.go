@@ -156,6 +156,7 @@ func main() {
     out, err := cmd.Output()
     panic("Output error", err)
 
+    fmt.Printf(string(out))
     logfile := fmt.Sprintf("tmp/log/%s.log", s)
     writeLog(logfile, string(out))
 
