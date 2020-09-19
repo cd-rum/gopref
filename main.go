@@ -11,8 +11,10 @@ import (
   "os/exec"
   "regexp"
   "runtime"
+  "sort"
   "time"
 
+  "github.com/patwie/cpuinfo/proc"
   "github.com/cheshir/go-mq"
   "gopkg.in/yaml.v1"
 )
@@ -31,6 +33,7 @@ type LogFile struct {
 // Stats holds all the server info
 type Stats struct {
   HeapReleased uint64
+  Processes map[int]*proc.Process
   Queue []string
   Sys uint64
 }
@@ -124,6 +127,60 @@ func remove(s []string, r string) []string {
   return s
 }
 
+// hash map of all processes
+var m map[int]*proc.Process
+
+// DisplayProcessList does the thing
+func DisplayProcessList(procs map[int]*proc.Process, factor float32, max int) {
+  var mDisplay []proc.Process
+  for _, v := range procs {
+    if v.Dirty == false && v.Active == true {
+      if v.TimeCur - v.TimePrev > 0 {
+        usage := 1. / factor * float32(v.TimeCur - v.TimePrev)
+        copyProc := proc.Process{Pid: v.Pid, TimePrev: 0, TimeCur: 0, Dirty: false, Active: false, Usage: usage}
+        mDisplay = append(mDisplay, copyProc)
+      }
+    }
+  }
+
+  sort.Sort(proc.ByUsage(mDisplay))
+
+  if len(mDisplay) > 0 {
+    fmt.Printf("\033[2J")
+    for i := 0; i < max; i++ {
+      fmt.Printf("pid: %d \t\t usage: %.2f\n", mDisplay[i].Pid, mDisplay[i].Usage)
+    }
+  }
+}
+
+// MarkDirtyProcessList does what it says on the tin
+func MarkDirtyProcessList(procs map[int]*proc.Process) {
+  for k := range procs {
+    procs[k].Dirty = true
+    procs[k].Active = false
+  }
+}
+
+func top() {
+  m = make(map[int]*proc.Process)
+  cpuTickPrev := int64(0)
+  cpuTickCur := int64(0)
+  cores := proc.NumCores()
+
+  for {
+    MarkDirtyProcessList(m)
+
+    cpuTickCur = proc.CpuTick()
+    proc.UpdateProcessList(m)
+
+    factor := float32(cpuTickCur - cpuTickPrev) / float32(cores) / 100.
+    DisplayProcessList(m, factor, 10)
+
+    cpuTickPrev = cpuTickCur
+    time.Sleep(3 * time.Second)
+  }
+}
+
 func main() {
   if env() != "dev" {
     writeFontsIndex()
@@ -131,6 +188,7 @@ func main() {
 
   var config mq.Config
   queue := []string{}
+  top()
 
   err := yaml.Unmarshal([]byte(externalConfig), &config)
   panic("Failed to read config", err)
@@ -244,9 +302,9 @@ func main() {
 
   // stats
   mux.HandleFunc("/api/stats", func(w http.ResponseWriter, r *http.Request) {
-    var m runtime.MemStats
-    runtime.ReadMemStats(&m)
-    stats := Stats{Queue: queue, HeapReleased: bToMb(m.HeapReleased), Sys: bToMb(m.Sys)}
+    var mem runtime.MemStats
+    runtime.ReadMemStats(&mem)
+    stats := Stats{Processes: m, Queue: queue, HeapReleased: bToMb(mem.HeapReleased), Sys: bToMb(mem.Sys)}
 
     js, err := json.Marshal(stats)
     if err != nil {
