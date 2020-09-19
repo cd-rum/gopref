@@ -4,7 +4,9 @@
       <div class="uk-width-expand@m">
 
         <pre>producing {{ formatProduction(stats.Queue) }}</pre>
-        <pre>memory: {{ stats.HeapReleased }}mb / {{ stats.Sys }}mb</pre>
+        <pre v-for='stat in stats.Processes' :key='stat.Pid'>
+          {{ stat.Name }} ({{ stat.PID }}): cpu: {{ stat.CPU }}% / memory: {{ stat.Memory }}%
+        </pre>
 
         <hr />
 

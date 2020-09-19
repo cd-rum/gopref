@@ -11,28 +11,37 @@ import (
   "os/exec"
   "regexp"
   "runtime"
+  "strings"
   "time"
 
   "github.com/cheshir/go-mq"
+  "github.com/shirou/gopsutil/process"
   "gopkg.in/yaml.v1"
 )
 
 // Font is just a string
 type Font struct {
-  Name string
+  Name           string
 }
 
 // LogFile represents an attempt
 type LogFile struct {
-  ID string
-  Output string
+  ID             string
+  Output         string
+}
+
+// Proc to marshal JSON
+type Proc struct {
+  PID            int32
+  Name           string
+  CPU            float64
+  Memory         float32
 }
 
 // Stats holds all the server info
 type Stats struct {
-  HeapReleased uint64
-  Queue []string
-  Sys uint64
+  Processes      []*Proc
+  Queue          []string
 }
 
 func env() string {
@@ -109,10 +118,6 @@ func writeLog(path string, output string) {
 
   err = ioutil.WriteFile(path, []byte(output), 0)
   panic("Output error", err)
-}
-
-func bToMb(b uint64) uint64 {
-    return b / 1024 / 1024
 }
 
 func remove(s []string, r string) []string {
@@ -245,8 +250,21 @@ func main() {
   // stats
   mux.HandleFunc("/api/stats", func(w http.ResponseWriter, r *http.Request) {
     var m runtime.MemStats
+    ps := []*Proc{}
+    procs, _ := process.Processes()
+
+    for _, p := range procs {
+      name, _ := p.Name()
+
+      if strings.Contains(name, "gopref") || strings.Contains(name, "scribus") {
+        cpu, _ := p.CPUPercent()    // of system total
+        mem, _ := p.MemoryPercent() // of system total
+        ps = append(ps, &Proc{PID: p.Pid, Name: name, CPU: cpu, Memory: mem})
+      }
+    }
+
     runtime.ReadMemStats(&m)
-    stats := Stats{Queue: queue, HeapReleased: bToMb(m.HeapReleased), Sys: bToMb(m.Sys)}
+    stats := Stats{Processes: ps, Queue: queue}
 
     js, err := json.Marshal(stats)
     if err != nil {
