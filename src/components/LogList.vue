@@ -4,9 +4,7 @@
       <div class="uk-width-expand@m">
 
         <pre>producing {{ formatProduction(stats.Queue) }}</pre>
-        <pre v-for='stat in stats.Processes' :key='stat.Pid'>
-          {{ stat.Name }} ({{ stat.PID }}): cpu: {{ stat.CPU }}% / memory: {{ stat.Memory }}%
-        </pre>
+        <pre v-for='stat in stats.Processes' :key='stat.Pid'>{{ stat.Name }} ({{ stat.PID }}): cpu: {{ formatPercent(stat.CPU) }}% / memory: {{ formatPercent(stat.Memory) }}%</pre>
 
         <hr />
 
@@ -76,6 +74,9 @@
       formatProduction (arr) {
         if (arr && arr.length > 0) return arr.join(', ')
         else return `nothing`
+      },
+      formatPercent (num) {
+        return Number((num).toFixed(2))
       }
     }
   }
