@@ -214,7 +214,7 @@ def place_snippet(eps, eps_count, total):
   pw, ph = scribus.getPageSize()
 
   # make up for empty space manually
-  if eps.page_number > 1 and w < pw and h < ph:
+  if eps.page_number > 1 and w < 124 and w > 118:
     scribus.moveObject(20, 20, orig)
   delete_excess_pages(total)
 
@@ -311,6 +311,7 @@ def main(argv):
 
   for frame in document.frames:
     if frame.page_number == 0:
+      print "editing master"
       scribus.editMasterPage('MASTER')
     else:
       scribus.gotoPage(frame.page_number)
