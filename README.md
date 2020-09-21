@@ -1,5 +1,13 @@
 # gopref
 
+Switched from Vegeta to [Ali](https://github.com/nakabonne/ali).
+
+## load-test
+
+```
+ali
+```
+
 ## develop
 
 ```
