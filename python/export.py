@@ -444,9 +444,9 @@ def main(argv):
   pi = 1
   pr = scribus.pageCount()
   while (pi <= pt):
-    scribus.gotoPage(p)
+    scribus.gotoPage(pi)
     scribus.applyMasterPage('MASTER', pi)
-    page += 1
+    pi += 1
 
   scribus.saveDoc()
 
