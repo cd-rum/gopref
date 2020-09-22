@@ -311,7 +311,6 @@ def main(argv):
 
   for frame in document.frames:
     if frame.page_number == 0:
-      print "editing master"
       scribus.editMasterPage('MASTER')
     else:
       scribus.gotoPage(frame.page_number)
@@ -441,7 +440,10 @@ def main(argv):
         scribus.setFillColor(new_colour(frame.frame_style.colour), key)
 
     if frame.page_number == 0: scribus.closeMasterPage()
-    scribus.applyMasterPage('MASTER', scribus.currentPage())
+
+  for (p in range(1, scribus.pageCount()):
+    scribus.gotoPage(p)
+    scribus.applyMasterPage('MASTER', p)
 
   scribus.saveDoc()
 
