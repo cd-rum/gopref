@@ -1,5 +1,0 @@
-Requirement already satisfied: beautifulsoup4 in /Users/ghost/Library/Python/2.7/lib/python/site-packages (4.8.0)
-Requirement already satisfied: soupsieve>=1.2 in /Users/ghost/Library/Python/2.7/lib/python/site-packages (from beautifulsoup4) (1.9.3)
-Requirement already satisfied: backports.functools-lru-cache; python_version < "3" in /Users/ghost/Library/Python/2.7/lib/python/site-packages (from soupsieve>=1.2->beautifulsoup4) (1.5)
-Found credentials in environment variables.
-[pdf] Sent 120089/42672934fa7348b8b487e5f23dc408e4 in 12.0s

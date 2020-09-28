@@ -78,7 +78,7 @@ producers:
   - name: "sync_producer"
     exchange: "gopref_env"
     routing_key: "key"
-    sync: true
+    sync: false
     options:
       content_type: "text/plain"
       delivery_mode: 2
