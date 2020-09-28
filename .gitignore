@@ -20,6 +20,8 @@ pnpm-debug.log*
 
 .env
 
+gopref
+
 tmp/*
 tmp/log/*
 !tmp/log
@@ -27,4 +29,6 @@ tmp/pdf/*
 !tmp/pdf
 tmp/sla/*
 !tmp/sla
+tmp/fonts/*
+!tmp/fonts
 *.log
