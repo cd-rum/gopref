@@ -181,15 +181,13 @@ func main() {
 
     id := r.Form["id"][0]
 
-    go func() {
-      producer, err := messageQueue.SyncProducer("sync_producer")
-      panic("Failed to get sync producer: ", err)
+    producer, err := messageQueue.SyncProducer("sync_producer")
+    panic("Failed to get sync producer: ", err)
 
-      err = producer.Produce([]byte(id))
-      panic("Failed to send message from sync producer: ", err)
+    err = producer.Produce([]byte(id))
+    panic("Failed to send message from sync producer: ", err)
 
-      time.Sleep(time.Second)
-    }()
+    time.Sleep(time.Second)
 
     fmt.Fprintln(w, id)
   })
