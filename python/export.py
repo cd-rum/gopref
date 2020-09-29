@@ -253,8 +253,11 @@ def main(argv):
   json_resp = byteify(json.loads(resp))
   document = DotMap(json_resp).document
   document_file = json.loads(document)
+  print json.dumps(document_file, indent=4)
 
-  with open("tmp/json/{0}.json".format(document_id, "w") as data_file:
+  json_file = "json/{0}.json".format(document_id, "w")
+  json_file_path = os.path.join(TEMP_PATH, json_file)
+  with open(json_file_path) as data_file:
     json.dump(document_file, data_file, indent=4, sort_keys=True)
 
   start = datetime.datetime.now().replace(microsecond = 0)
