@@ -17,7 +17,7 @@
           </thead>
           <tbody v-for="log in logs" :key="log.ID">
             <tr>
-              <td><a href="#" @click.prevent="getDocument(log.ID)">{{ formatID(log.ID) }}</a></td>
+              <td><a href="#" @click.prevent="getDocument(formatID(log.ID))">{{ formatID(log.ID) }}</a></td>
               <td>{{ formatOutput(log.Output) }}</td>
             </tr>
           </tbody>
