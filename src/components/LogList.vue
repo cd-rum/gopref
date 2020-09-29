@@ -82,8 +82,11 @@
         return str.split('/')[2].split('.')[0]
       },
       formatOutput (str) {
-        if (str.includes('[pdf]')) return str.split('[pdf]')[1]
-        else if (str.includes('(most recent call last):')) return str.split('(most recent call last):')[1]
+        if (str.includes('[pdf]'))
+          if (str.includes(' pathForIcon')) {
+            return str.split('[pdf]')[1].split(' pathForIcon')[0]
+          } else return str.split('[pdf]')[1]
+        else if (str.includes('(most recent call last):')) return str.split('raise')[1]
         else return str
       },
       formatProduction (arr) {
