@@ -256,7 +256,7 @@ def main(argv):
   document_file = json.loads(resp)
   print json.dumps(document_file, indent=4)
 
-  json_file = "json/{0}.json".format(document_id, "w")
+  json_file = "json/{0}.json".format(document_id, "w+")
   json_file_path = os.path.join(TEMP_PATH, json_file)
   with open(json_file_path) as data_file:
     json.dump(document_file, data_file, indent=4, sort_keys=True)
