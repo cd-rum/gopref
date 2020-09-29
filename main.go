@@ -27,6 +27,7 @@ type Font struct {
 // LogFile represents an attempt
 type LogFile struct {
   ID             string
+  ModTime        time.Time
   Output         string
 }
 
@@ -203,10 +204,14 @@ func main() {
 
       defer file.Close()
 
+      fileStat, err := os.Stat(filepath)
+      panic("No time", err)
+
+      modTime := fileStat.ModTime()
       str, err := ioutil.ReadFile(filepath)
       panic("Can't read log file", err)
 
-      logs = append(logs, &LogFile{ID: file.Name(), Output: string(str)})
+      logs = append(logs, &LogFile{ID: file.Name(), ModTime: modTime, Output: string(str)})
     }
 
     last10  := logs[len(logs)-10:]
