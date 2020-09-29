@@ -12,12 +12,14 @@
           <thead>
             <tr>
               <th width="220">ID</th>
+              <th>Timestamp</th>
               <th>Status</th>
             </tr>
           </thead>
           <tbody v-for="log in logs" :key="log.ID">
             <tr>
               <td>{{ formatID(log.ID) }}</td>
+              <td>{{ log.ModTime }}</td>
               <td>{{ formatOutput(log.Output) }}</td>
             </tr>
           </tbody>
