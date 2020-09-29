@@ -39,7 +39,6 @@ HEX = uuid.uuid4().hex
 MM_FACTOR = 2.83464566929134
 BLEED = str(5 * MM_FACTOR)
 FONTS = []
-RESOURCE_SIZE = 0
 
 def byteify(input):
   if isinstance(input, dict):
@@ -253,6 +252,7 @@ def main(argv):
   resp = urllib2.urlopen(req).read()
   json_resp = byteify(json.loads(resp))
   document = DotMap(json_resp).document
+  resource_size = 0
 
   document_file = json.loads(resp)
   print json.dumps(document_file, indent=4)
@@ -310,7 +310,7 @@ def main(argv):
     for eps in reversed(component.snippets):
       if eps.key is not None:
         place_snippet(eps, len(component.snippets), document.total_pages)
-        RESOURCE_SIZE += eps.size
+        resource_size += eps.size
 
   scribus.saveDoc()
 
@@ -406,7 +406,7 @@ def main(argv):
           adjust = scribus.getSize(key)
           img_key = "{0}_{1}".format(key, var.id)
           img = download_img(var.key)
-          RESOURCE_SIZE += os.path.getsize(img)
+          resource_size += os.path.getsize(img)
           scribus.createImage(
             float(frame.x), float(frame.y + adjust[1] + 3), float(frame.width),
             float(frame.width), img_key)
@@ -425,7 +425,7 @@ def main(argv):
       for variable in frame.frame_variables:
         if variable.key is not None:
           img = download_img(variable.key)
-          RESOURCE_SIZE += os.path.getsize(img)
+          resource_size += os.path.getsize(img)
           globals()[key] = scribus.createImage(
             float(frame.x), float(frame.y), float(frame.width),
             float(frame.height), key)
@@ -497,7 +497,7 @@ def main(argv):
 
   finish = datetime.datetime.now().replace(microsecond = 0)
   interval = (finish - start).total_seconds()
-  size = RESOURCE_SIZE / 1024 / 1024
+  size = resource_size / 1024 / 1024
   print "[pdf] Sent {0}Mb {1} {2}/{3} in {4}s".format(size, document.template, document_id, HEX, interval)
   return 0
 
