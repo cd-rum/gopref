@@ -12,7 +12,7 @@
           <thead>
             <tr>
               <th width="120">ID</th>
-              <th>Timestamp</th>
+              <th>Time</th>
               <th>Status</th>
             </tr>
           </thead>
