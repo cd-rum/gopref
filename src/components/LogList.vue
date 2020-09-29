@@ -17,7 +17,7 @@
           </thead>
           <tbody v-for="log in logs" :key="log.ID">
             <tr>
-              <td><a href="#" @click.prevent="getDocument(formatID(log.ID))">{{ formatID(log.ID) }}</a></td>
+              <td>{{ formatID(log.ID) }}</td>
               <td>{{ formatOutput(log.Output) }}</td>
             </tr>
           </tbody>
@@ -34,6 +34,7 @@
     name: 'LogList',
     data () {
       return {
+        document: {},
         logs: [],
         stats: {}
       }
@@ -58,15 +59,6 @@
         axios.get('/api/stats')
         .then(res => {
           this.stats = res.data
-        })
-        .catch(err => {
-          console.log(err)
-        })
-      },
-      getDocument (id) {
-        axios.get(`https://advantplus.com.au/api/v5/documents/${id}`)
-        .then(res => {
-          console.log(res.data)
         })
         .catch(err => {
           console.log(err)

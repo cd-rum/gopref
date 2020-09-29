@@ -39,6 +39,7 @@ HEX = uuid.uuid4().hex
 MM_FACTOR = 2.83464566929134
 BLEED = str(5 * MM_FACTOR)
 FONTS = []
+RESOURCE_SIZE = 0
 
 def byteify(input):
   if isinstance(input, dict):
@@ -66,10 +67,12 @@ def download_img(key):
 
   make_dirs(new_file)
   S3_RESOURCE.meta.client.download_file(BUCKET, clean_key, new_file)
+  RESOURCE_SIZE += os.path.getsize(new_file)
   return new_file
 
 def download_eps(eps):
   new_file = os.path.join(TEMP_PATH, eps.filename)
+  RESOURCE_SIZE += eps.size
   if os.path.isfile(new_file): return new_file
 
   make_dirs(new_file)
@@ -493,7 +496,8 @@ def main(argv):
 
   finish = datetime.datetime.now().replace(microsecond = 0)
   interval = (finish - start).total_seconds()
-  print "[pdf] Sent {0}/{1} in {2}s".format(document_id, HEX, interval)
+  size = RESOURCE_SIZE / 1024 / 1024
+  print "[pdf] Sent {0}Mb {1} {2}/{3} in {4}s".format(size, document.template, document_id, HEX, interval)
   return 0
 
 if __name__ == '__main__': main(sys.argv)
