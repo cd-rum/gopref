@@ -67,12 +67,10 @@ def download_img(key):
 
   make_dirs(new_file)
   S3_RESOURCE.meta.client.download_file(BUCKET, clean_key, new_file)
-  RESOURCE_SIZE += os.path.getsize(new_file)
   return new_file
 
 def download_eps(eps):
   new_file = os.path.join(TEMP_PATH, eps.filename)
-  RESOURCE_SIZE += eps.size
   if os.path.isfile(new_file): return new_file
 
   make_dirs(new_file)
@@ -312,6 +310,7 @@ def main(argv):
     for eps in reversed(component.snippets):
       if eps.key is not None:
         place_snippet(eps, len(component.snippets), document.total_pages)
+        RESOURCE_SIZE += eps.size
 
   scribus.saveDoc()
 
@@ -407,6 +406,7 @@ def main(argv):
           adjust = scribus.getSize(key)
           img_key = "{0}_{1}".format(key, var.id)
           img = download_img(var.key)
+          RESOURCE_SIZE += os.path.getsize(img)
           scribus.createImage(
             float(frame.x), float(frame.y + adjust[1] + 3), float(frame.width),
             float(frame.width), img_key)
@@ -425,6 +425,7 @@ def main(argv):
       for variable in frame.frame_variables:
         if variable.key is not None:
           img = download_img(variable.key)
+          RESOURCE_SIZE += os.path.getsize(img)
           globals()[key] = scribus.createImage(
             float(frame.x), float(frame.y), float(frame.width),
             float(frame.height), key)
