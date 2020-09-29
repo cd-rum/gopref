@@ -12,6 +12,7 @@ import shlex
 import urllib2
 import datetime
 import json
+import scribus
 import shutil
 import import_or_install as imp
 
@@ -25,7 +26,6 @@ import botocore
 
 from bs4 import BeautifulSoup
 from dotmap import DotMap
-from scribus import *
 from xml.etree import ElementTree as et
 
 DOMAIN = os.environ['APLUS_DOMAIN']
