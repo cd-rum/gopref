@@ -252,7 +252,8 @@ def main(argv):
   resp = urllib2.urlopen(req).read()
   json_resp = byteify(json.loads(resp))
   document = DotMap(json_resp).document
-  document_file = json.loads(document)
+
+  document_file = json.loads(resp)
   print json.dumps(document_file, indent=4)
 
   json_file = "json/{0}.json".format(document_id, "w")
