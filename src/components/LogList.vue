@@ -11,7 +11,7 @@
         <table class="uk-table">
           <thead>
             <tr>
-              <th width="220">ID</th>
+              <th width="120">ID</th>
               <th>Timestamp</th>
               <th>Status</th>
             </tr>
@@ -19,7 +19,7 @@
           <tbody v-for="log in logs" :key="log.ID">
             <tr>
               <td>{{ formatID(log.ID) }}</td>
-              <td>{{ log.ModTime }}</td>
+              <td>{{ formatDate(log.ModTime) }}</td>
               <td>{{ formatOutput(log.Output) }}</td>
             </tr>
           </tbody>
@@ -31,6 +31,14 @@
 
 <script>
   import axios from 'axios'
+  import dayjs from 'dayjs'
+  import * as customParseFormat from 'dayjs/plugin/customParseFormat'
+  import * as relativeTime from 'dayjs/plugin/relativeTime'
+  import 'dayjs/locale/en'
+
+  dayjs.extend(customParseFormat)
+  dayjs.extend(relativeTime)
+  dayjs.locale('en')
 
   export default {
     name: 'LogList',
@@ -65,6 +73,10 @@
         .catch(err => {
           console.log(err)
         })
+      },
+      formatDate (str) {
+        const stamp = dayjs(str)
+        return stamp.fromNow()
       },
       formatID (str) {
         return str.split('/')[2].split('.')[0]

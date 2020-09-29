@@ -62,7 +62,7 @@ def make_dirs(key):
 def download_img(key):
   clean_key = urllib2.unquote(str(key[:key.find("?")]))
   new_file = os.path.join(TEMP_PATH, clean_key)
-  # if os.path.isfile(new_file): return new_file
+  if os.path.isfile(new_file): return new_file
 
   make_dirs(new_file)
   S3_RESOURCE.meta.client.download_file(BUCKET, clean_key, new_file)
@@ -482,7 +482,6 @@ def main(argv):
   high.useDocBleeds = True
   high.save()
 
-  # if os.environ['MIX_ENV'] != 'dev':
   upload(low_path, low_key, high_path, high_key)
   shutil.rmtree(os.path.dirname(low_path))
   result = { 'pdf_result': {
