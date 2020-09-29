@@ -497,8 +497,7 @@ def main(argv):
 
   finish = datetime.datetime.now().replace(microsecond = 0)
   interval = (finish - start).total_seconds()
-  size = resource_size / 1024 / 1024
-  print "[pdf] Sent {0}Mb {1} {2}/{3} in {4}s".format(size, document.template, document_id, HEX, interval)
+  print "[pdf] Sent {0}b {1} {2}/{3} in {4}s".format(resource_size, document.template, document_id, HEX, interval)
   return 0
 
 if __name__ == '__main__': main(sys.argv)
