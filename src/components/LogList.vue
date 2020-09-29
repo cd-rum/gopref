@@ -59,7 +59,7 @@
       getLogList () {
         axios.get('/api/logs')
         .then(res => {
-          this.logs = res.data
+          this.logs = res.data.reverse()
         })
         .catch(err => {
           console.log(err)
