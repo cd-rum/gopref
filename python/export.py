@@ -252,6 +252,8 @@ def main(argv):
   resp = urllib2.urlopen(req).read()
   json_resp = byteify(json.loads(resp))
   document = DotMap(json_resp).document
+  print 'template: {0}'.format(document.template)
+  print 'eps: {0}'.format(document.components)
 
   start = datetime.datetime.now().replace(microsecond = 0)
   low_key = "pdf/{0}/{1}/{2}_{3}_low.pdf".format(document_id, HEX, document_id, HEX)

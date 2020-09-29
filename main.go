@@ -180,7 +180,6 @@ func main() {
     }
 
     id := r.Form["id"][0]
-
     producer, err := messageQueue.SyncProducer("sync_producer")
     panic("Failed to get sync producer: ", err)
 
@@ -188,7 +187,6 @@ func main() {
     panic("Failed to send message from sync producer: ", err)
 
     time.Sleep(time.Second)
-
     fmt.Fprintln(w, id)
   })
 
@@ -211,7 +209,8 @@ func main() {
       logs = append(logs, &LogFile{ID: file.Name(), Output: string(str)})
     }
 
-    js, err := json.Marshal(logs)
+    last10  := logs[len(logs)-10:]
+    js, err := json.Marshal(last10)
     if err != nil {
       http.Error(w, err.Error(), http.StatusInternalServerError)
       return
