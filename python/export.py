@@ -70,7 +70,7 @@ def download_img(key):
 
 def download_eps(eps):
   new_file = os.path.join(TEMP_PATH, eps.filename)
-  if os.path.isfile(new_file): return new_file
+  # if os.path.isfile(new_file): return new_file
 
   make_dirs(new_file)
   S3_RESOURCE.meta.client.download_file(BUCKET, eps.key, new_file)
