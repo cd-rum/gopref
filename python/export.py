@@ -54,7 +54,7 @@ def byteify(input):
 def res_domain:
   if DOMAIN == 0:
     return "https://staging.advantplus.com.au"
-  else if DOMAIN == 1:
+  elif DOMAIN == 1:
     return "https://advantplus.com.au"
 
 def make_dirs(key):
