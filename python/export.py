@@ -51,10 +51,10 @@ def byteify(input):
   else:
     return input
 
-def res_domain:
-  if DOMAIN == 0:
+def res_domain(domain):
+  if domain == 0:
     return "https://staging.advantplus.com.au"
-  elif DOMAIN == 1:
+  elif domain == 1:
     return "https://advantplus.com.au"
 
 def make_dirs(key):
@@ -249,11 +249,11 @@ def select_text(i, j, frame):
 def main(argv):
   document_id, DOMAIN = argv[1][:-1], int(argv[1][-1])
   creds = { 'email': EMAIL, 'password': PASSWORD }
-  req = urllib2.Request('{0}/api/v4/users/sign_in/'.format(res_domain()))
+  req = urllib2.Request('{0}/api/v4/users/sign_in/'.format(res_domain(DOMAIN)))
   req.add_header('Content-Type', 'application/json')
   resp = urllib2.urlopen(req, json.dumps(creds)).read()
   token = json.loads(resp)["response"]
-  req = urllib2.Request("{0}/api/v4/documents/{1}/".format(res_domain(), document_id))
+  req = urllib2.Request("{0}/api/v4/documents/{1}/".format(res_domain(DOMAIN), document_id))
   req.add_header('Authorization', "Bearer {0}".format(token))
   resp = urllib2.urlopen(req).read()
   json_resp = byteify(json.loads(resp))
