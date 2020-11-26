@@ -74,7 +74,7 @@ queues:
     exchange: "gopref_env"
     routing_key: "key"
     options:
-      durable: false
+      durable: true
 producers:
   - name: "sync_producer"
     exchange: "gopref_env"
