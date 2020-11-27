@@ -79,7 +79,7 @@
         return stamp.fromNow()
       },
       formatID (str) {
-        return str.split('/')[2].split('.')[0].slice(0, -1)
+        return str.split('/')[2].split('.')[0]
       },
       formatOutput (str) {
         if (str.includes('[pdf]'))

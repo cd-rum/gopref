@@ -28,7 +28,7 @@ from bs4 import BeautifulSoup
 from dotmap import DotMap
 from xml.etree import ElementTree as et
 
-DOMAIN = 0
+DOMAIN = os.environ['APLUS_DOMAIN']
 EMAIL = os.environ['APLUS_USER']
 PASSWORD = os.environ['APLUS_PASS']
 BUCKET = os.environ['BUCKET']
@@ -50,12 +50,6 @@ def byteify(input):
     return input.encode('utf-8')
   else:
     return input
-
-def res_domain(domain):
-  if domain == 0:
-    return "https://staging.advantplus.com.au"
-  elif domain == 1:
-    return "https://advantplus.com.au"
 
 def make_dirs(key):
   path = os.path.dirname(key)
@@ -247,13 +241,13 @@ def select_text(i, j, frame):
     scribus.selectText(0, j, frame)
 
 def main(argv):
-  document_id, DOMAIN = argv[1][:-1], int(argv[1][-1])
+  document_id = argv[1]
   creds = { 'email': EMAIL, 'password': PASSWORD }
-  req = urllib2.Request('{0}/api/v4/users/sign_in/'.format(res_domain(DOMAIN)))
+  req = urllib2.Request('{0}/api/v4/users/sign_in/'.format(DOMAIN))
   req.add_header('Content-Type', 'application/json')
   resp = urllib2.urlopen(req, json.dumps(creds)).read()
   token = json.loads(resp)["response"]
-  req = urllib2.Request("{0}/api/v4/documents/{1}/".format(res_domain(DOMAIN), document_id))
+  req = urllib2.Request("{0}/api/v4/documents/{1}/".format(DOMAIN, document_id))
   req.add_header('Authorization', "Bearer {0}".format(token))
   resp = urllib2.urlopen(req).read()
   json_resp = byteify(json.loads(resp))
@@ -494,7 +488,7 @@ def main(argv):
     'press_ready_url': high_key, 'low_resolution_url': low_key,
     'error_code': None, 'created': True
   } }
-  req = urllib2.Request("{0}/api/v4/documents/{1}/".format(res_domain(), document_id))
+  req = urllib2.Request("{0}/api/v4/documents/{1}/".format(DOMAIN, document_id))
   req.get_method = lambda: 'PATCH'
   req.add_header('Authorization', "Bearer {0}".format(token))
   req.add_header('Content-Type', 'application/json')
