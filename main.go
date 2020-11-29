@@ -174,7 +174,6 @@ func main() {
       cmd = exec.Command("xvfb-run", "-a", "scribus", "-ns", "-py", "python/export.py", s)
     }
 
-    // out, err := cmd.Output()
     var out bytes.Buffer
     var stderr bytes.Buffer
     cmd.Stdout = &out
@@ -185,11 +184,13 @@ func main() {
       return
     }
     fmt.Println("Result: " + out.String())
+
+    // out, err := cmd.Output()
     panic("Output error", err)
 
     fmt.Printf(string(out.String()))
     logfile := fmt.Sprintf("tmp/log/%s.log", s)
-    writeLog(logfile, string(out))
+    writeLog(logfile, string(out.String()))
 
     queue = remove(queue, s)
     message.Ack(false)
@@ -304,4 +305,6 @@ func main() {
   })
   http.ListenAndServe(":4000", mux)
 }
+
+
 
