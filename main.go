@@ -90,11 +90,9 @@ consumers:
 `
 
 func writeFontsIndex() {
-  cmd := exec.Command("xvfb-run", "-a", "scribus-ng", "-g", "-ns", "-py", "python/fonts.py")
+  cmd := exec.Command("xvfb-run", "-a", "scribus", "-g", "-ns", "-py", "python/fonts.py")
   if env() == "dev" {
     cmd = exec.Command("/Applications/Scribus.app/Contents/MacOS/Scribus", "-g", "-py", "python/fonts.py")
-  } else if env() == "staging" {
-    cmd = exec.Command("xvfb-run", "-a", "scribus", "-g", "-ns", "-py", "python/fonts.py")
   }
 
   out, err := cmd.CombinedOutput()
@@ -159,11 +157,9 @@ func main() {
   err = messageQueue.SetConsumerHandler("cmd_call", func(message mq.Message) {
     s := string(message.Body())
     queue = append(queue, s)
-    cmd := exec.Command("xvfb-run", "-a", "scribus-ng", "-ns", "-py", "python/export.py", s)
+    cmd := exec.Command("xvfb-run", "-a", "scribus", "-ns", "-py", "python/export.py", s)
     if env() == "dev" {
       cmd = exec.Command("/Applications/Scribus.app/Contents/MacOS/Scribus", "-py", "python/export.py", s)
-    } else if env() == "staging" {
-      cmd = exec.Command("xvfb-run", "-a", "scribus", "-ns", "-py", "python/export.py", s)
     }
 
     out, err := cmd.CombinedOutput()
