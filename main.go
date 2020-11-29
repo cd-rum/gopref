@@ -98,7 +98,10 @@ func writeFontsIndex() {
   }
 
   out, err := cmd.CombinedOutput()
-  panic("Output error", err)
+  if err != nil {
+    fmt.Println(fmt.Sprint(err) + ": " + string(out))
+    return
+  }
 
   data := []byte(out)
   rcomma := regexp.MustCompile(`', '`)
@@ -164,7 +167,10 @@ func main() {
     }
 
     out, err := cmd.CombinedOutput()
-    panic("Output error", err)
+    if err != nil {
+      fmt.Println(fmt.Sprint(err) + ": " + string(out))
+      return
+    }
 
     fmt.Printf(string(out))
     logfile := fmt.Sprintf("tmp/log/%s.log", s)
