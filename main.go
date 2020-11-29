@@ -2,6 +2,7 @@ package main
 
 import (
   "bufio"
+  "bytes"
   "encoding/json"
   "fmt"
   "io/ioutil"
@@ -97,10 +98,20 @@ func writeFontsIndex() {
     cmd = exec.Command("xvfb-run", "-a", "scribus", "-g", "-ns", "-py", "python/fonts.py")
   }
 
-  out, err := cmd.Output()
+  // out, err := cmd.Output()
+  var out bytes.Buffer
+  var stderr bytes.Buffer
+  cmd.Stdout = &out
+  cmd.Stderr = &stderr
+  err := cmd.Run()
+  if err != nil {
+      fmt.Println(fmt.Sprint(err) + ": " + stderr.String())
+      return
+  }
+  fmt.Println("Result: " + out.String())
   panic("Output error", err)
 
-  data := []byte(out)
+  data := []byte(out.String())
   rcomma := regexp.MustCompile(`', '`)
   rstart := regexp.MustCompile(`\['`)
   rend := regexp.MustCompile(`'\]`)
