@@ -98,20 +98,10 @@ func writeFontsIndex() {
     cmd = exec.Command("xvfb-run", "-a", "scribus", "-g", "-ns", "-py", "python/fonts.py")
   }
 
-  // out, err := cmd.Output()
-  var out bytes.Buffer
-  var stderr bytes.Buffer
-  cmd.Stdout = &out
-  cmd.Stderr = &stderr
-  err := cmd.Run()
-  if err != nil {
-      fmt.Println(fmt.Sprint(err) + ": " + stderr.String())
-      return
-  }
-  fmt.Println("Result: " + out.String())
+  out, err := cmd.CombinedOutput()
   panic("Output error", err)
 
-  data := []byte(out.String())
+  data := []byte(out)
   rcomma := regexp.MustCompile(`', '`)
   rstart := regexp.MustCompile(`\['`)
   rend := regexp.MustCompile(`'\]`)
@@ -174,23 +164,12 @@ func main() {
       cmd = exec.Command("xvfb-run", "-a", "scribus", "-ns", "-py", "python/export.py", s)
     }
 
-    var out bytes.Buffer
-    var stderr bytes.Buffer
-    cmd.Stdout = &out
-    cmd.Stderr = &stderr
-    err := cmd.Run()
-    if err != nil {
-      fmt.Println(fmt.Sprint(err) + ": " + stderr.String())
-      return
-    }
-    fmt.Println("Result: " + out.String())
-
-    // out, err := cmd.Output()
+    out, err := cmd.CombinedOutput()
     panic("Output error", err)
 
-    fmt.Printf(string(out.String()))
+    fmt.Printf(string(out))
     logfile := fmt.Sprintf("tmp/log/%s.log", s)
-    writeLog(logfile, string(out.String()))
+    writeLog(logfile, string(out))
 
     queue = remove(queue, s)
     message.Ack(false)
