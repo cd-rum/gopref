@@ -45,6 +45,11 @@
     data () {
       return {
         document: {},
+        instance: axios.create({
+          httpsAgent: new axios.Agent({
+            rejectUnauthorized: false
+          })
+        }),
         logs: [],
         stats: {}
       }
@@ -57,7 +62,7 @@
     },
     methods: {
       getLogList () {
-        axios.get('/api/logs')
+        this.instance.get('/api/logs')
         .then(res => {
           this.logs = res.data.reverse()
         })
@@ -66,7 +71,7 @@
         })
       },
       getStats () {
-        axios.get('/api/stats')
+        this.instance.get('/api/stats')
         .then(res => {
           this.stats = res.data
         })
