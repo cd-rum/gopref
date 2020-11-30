@@ -220,8 +220,8 @@ func main() {
       logs = append(logs, &LogFile{ID: file.Name(), ModTime: modTime, Output: string(str)})
     }
 
-    last10  := logs[len(logs)-10:]
-    js, err := json.Marshal(last10)
+    // last10 := logs[len(logs)-10:]
+    js, err := json.Marshal(logs)
     if err != nil {
       http.Error(w, err.Error(), http.StatusInternalServerError)
       return
