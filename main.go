@@ -47,6 +47,7 @@ type Stats struct {
 
 func env() string {
   str, _ := os.LookupEnv("MIX_ENV")
+  fmt.Println(str)
   return str
 }
 
