@@ -15,7 +15,6 @@ import (
   "time"
 
   "github.com/cheshir/go-mq"
-  "github.com/joho/godotenv"
   "github.com/shirou/gopsutil/process"
   "gopkg.in/yaml.v1"
 )
@@ -134,12 +133,6 @@ func remove(s []string, r string) []string {
   return s
 }
 
-func init() {
-  if err := godotenv.Load(); err != nil {
-    log.Print("No .env file found")
-  }
-}
-
 func main() {
   if env() != "dev" {
     writeFontsIndex()
@@ -227,8 +220,8 @@ func main() {
       logs = append(logs, &LogFile{ID: file.Name(), ModTime: modTime, Output: string(str)})
     }
 
-    // last10 := logs[len(logs)-10:]
-    js, err := json.Marshal(logs)
+    last10 := logs[len(logs)-10:]
+    js, err := json.Marshal(last10)
     if err != nil {
       http.Error(w, err.Error(), http.StatusInternalServerError)
       return
