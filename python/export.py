@@ -84,7 +84,7 @@ def apply_font(fonts, font, frame):
   try:
     scribus.setFont(font, frame)
   except ValueError, e:
-    apply_font(fonts, "DejaVu Sans Book", frame)
+    apply_font(fonts, "Helvetica Neue LT Std 65 Medium", frame)
   else:
     fonts.append(font)
 
@@ -255,7 +255,6 @@ def main(argv):
   resource_size = 0
 
   document_file = json.loads(resp)
-  print json.dumps(document_file, indent=4)
 
   json_file = "json/{0}.json".format(document_id)
   json_file_path = os.path.join(TEMP_PATH, json_file)
