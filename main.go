@@ -15,6 +15,7 @@ import (
   "time"
 
   "github.com/cheshir/go-mq"
+  "github.com/joho/godotenv"
   "github.com/shirou/gopsutil/process"
   "gopkg.in/yaml.v1"
 )
@@ -131,6 +132,12 @@ func remove(s []string, r string) []string {
     }
   }
   return s
+}
+
+func init() {
+  if err := godotenv.Load(); err != nil {
+    log.Print("No .env file found")
+  }
 }
 
 func main() {
