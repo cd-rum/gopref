@@ -1,19 +1,20 @@
 #!/usr/bin/env python
 
-import os
-import sys
 import StringIO
-import struct
-import uuid
-import re
-import pdb
-import subprocess
-import shlex
-import urllib2
 import datetime
 import json
+import os
+import pdb
+import pprint
+import re
 import scribus
+import shlex
 import shutil
+import struct
+import subprocess
+import sys
+import urllib2
+import uuid
 import import_or_install as imp
 
 imp.import_or_install("beautifulsoup4")
@@ -27,6 +28,15 @@ import botocore
 from bs4 import BeautifulSoup
 from dotmap import DotMap
 from xml.etree import ElementTree as et
+
+command = shlex.split("env -i bash -c 'source .env'")
+proc = subprocess.Popen(command, stdout = subprocess.PIPE)
+
+for line in proc.stdout:
+  (key, _, value) = line.partition("=")
+  os.environ[key] = value
+proc.communicate()
+pprint.pprint(dict(os.environ))
 
 DOMAIN = os.environ['APLUS_DOMAIN']
 EMAIL = os.environ['APLUS_USER']
