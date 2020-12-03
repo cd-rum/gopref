@@ -59,7 +59,8 @@
       getLogList () {
         axios.get('/api/logs')
         .then(res => {
-          this.logs = res.data.reverse()
+          if (res.data) this.logs = res.data.reverse()
+          else this.logs = []
         })
         .catch(err => {
           console.log(err)
@@ -82,11 +83,7 @@
         return str.split('/')[2].split('.')[0]
       },
       formatOutput (str) {
-        if (str.includes('[pdf]'))
-          return str.split('[pdf]')[1]
-        else if (str.includes('most recent call last):'))
-          return str.split('most recent call last):')[1]
-        else return str
+        return str
       },
       formatProduction (arr) {
         if (arr && arr.length > 0) return arr.join(', ')

@@ -489,7 +489,6 @@ def main(argv):
   high.resolution = 300
   high.useDocBleeds = True
   high.save()
-  scribus.closeDoc()
 
   upload(low_path, low_key, high_path, high_key)
   shutil.rmtree(os.path.dirname(low_path))
@@ -507,8 +506,6 @@ def main(argv):
   interval = (finish - start).total_seconds()
 
   print "[pdf] Sent {0}b {1} {2}/{3} in {4}s".format(resource_size, document.template, document_id, HEX, interval)
-
-  scribus.fileQuit()
   return 0
 
 if __name__ == '__main__': main(sys.argv)
