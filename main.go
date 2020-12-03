@@ -164,7 +164,7 @@ func main() {
     if env() == "dev" {
       cmd = exec.Command("/Applications/Scribus.app/Contents/MacOS/Scribus", "-ns", "-py", "python/export.py", s)
     } else if env() == "staging" {
-      cmd := exec.Command("xvfb-run", "-a", "scribus", "-ns", "-py", "python/export.py", s)
+      cmd = exec.Command("xvfb-run", "-a", "scribus", "-ns", "-py", "python/export.py", s)
     }
 
     out, err := cmd.CombinedOutput()
