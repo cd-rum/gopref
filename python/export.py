@@ -36,7 +36,6 @@ for line in proc.stdout:
   (key, _, value) = line.partition("=")
   os.environ[key] = value
 proc.communicate()
-pprint.pprint(dict(os.environ))
 
 DOMAIN = os.environ['APLUS_DOMAIN']
 EMAIL = os.environ['APLUS_USER']
