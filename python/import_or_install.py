@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import pip
 
 if int(pip.__version__.split('.')[0]) > 9:

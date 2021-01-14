@@ -29,7 +29,7 @@ from bs4 import BeautifulSoup
 from dotmap import DotMap
 from xml.etree import ElementTree as et
 
-command = shlex.split("env -i bash -c 'source .env'")
+command = shlex.split("env -i sh -c 'source .env'")
 proc = subprocess.Popen(command, stdout = subprocess.PIPE)
 
 for line in proc.stdout:

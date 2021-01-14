@@ -45,12 +45,6 @@ type Stats struct {
   Queue          []string
 }
 
-func env() string {
-  str, _ := os.LookupEnv("MIX_ENV")
-  fmt.Println(str)
-  return str
-}
-
 func panic(msg string, err error) {
   if err != nil {
     log.Fatalf("%s: %s", msg, err)
@@ -92,11 +86,6 @@ consumers:
 
 func writeFontsIndex() {
   cmd := exec.Command("xvfb-run", "-a", "scribus-ng", "-g", "-ns", "-py", "python/fonts.py")
-  if env() == "dev" {
-    cmd = exec.Command("/Applications/Scribus.app/Contents/MacOS/Scribus", "-g", "-ns", "-py", "python/fonts.py")
-  } else if env() == "staging" {
-    cmd = exec.Command("xvfb-run", "-a", "scribus", "-g", "-ns", "-py", "python/fonts.py")
-  }
 
   out, err := cmd.CombinedOutput()
   if err != nil {
@@ -137,9 +126,7 @@ func remove(s []string, r string) []string {
 }
 
 func main() {
-  if env() != "dev" {
-    writeFontsIndex()
-  }
+  writeFontsIndex()
 
   var config mq.Config
   queue := []string{}
@@ -161,11 +148,6 @@ func main() {
     s := string(message.Body())
     queue = append(queue, s)
     cmd := exec.Command("xvfb-run", "-a", "scribus-ng", "-ns", "-py", "python/export.py", s)
-    if env() == "dev" {
-      cmd = exec.Command("/Applications/Scribus.app/Contents/MacOS/Scribus", "-ns", "-py", "python/export.py", s)
-    } else if env() == "staging" {
-      cmd = exec.Command("xvfb-run", "-a", "scribus", "-ns", "-py", "python/export.py", s)
-    }
 
     out, err := cmd.CombinedOutput()
     if err != nil {
