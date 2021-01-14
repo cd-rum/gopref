@@ -3,9 +3,15 @@ services:
   rabbitmq:
     image: rabbitmq
     container_name: rabbitmq
-    ports:
-      - 5672:5672
-      - 15672:15672
+    command: rabbitmq-server
+    expose:
+      - 5672
+      - 15672
+    healthcheck:
+      test: [ "CMD", "nc", "-z", "localhost", "5672" ]
+      interval: 5s
+      timeout: 15s
+      retries: 1
   gopref:
     image: gopref
     container_name: gopref
@@ -20,5 +26,5 @@ services:
       - rabbitmq
     volumes:
       - ${PWD}/dist:/usr/share/nginx/html
-    ports:
-      - 8080:80
+    expose:
+      - 8080
