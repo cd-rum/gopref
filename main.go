@@ -237,6 +237,7 @@ func main() {
       return
     }
 
+    w.Header().Set("Access-Control-Allow-Origin", "*")
     w.Header().Set("Content-Type", "application/json")
     w.Write(js)
   })
@@ -266,6 +267,7 @@ func main() {
       return
     }
 
+    w.Header().Set("Access-Control-Allow-Origin", "*")
     w.Header().Set("Content-Type", "application/json")
     w.Write(js)
   })

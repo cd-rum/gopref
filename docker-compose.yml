@@ -18,13 +18,14 @@ services:
     restart: on-failure
     depends_on:
       - rabbitmq
+    ports:
+      - 4000:4000
   web:
     image: nginx
     container_name: nginx
     depends_on:
       - gopref
-      - rabbitmq
     volumes:
-      - ${PWD}/dist:/usr/share/nginx/html
-    expose:
-      - 8080
+      - ~/build/gopref/dist:/usr/share/nginx/html
+    ports:
+      - 8080:80
