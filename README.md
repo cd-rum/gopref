@@ -11,13 +11,14 @@ ali
 ## develop
 
 ```
-overmind s
+npm run build
+docker build --tag gopref .
+docker-compose up
 ```
 
 ## deploy
 
 ```
-go build .
-npm run build
-sudo systemctl restart gopref
+docker build --tag gopref .
+docker-compose up
 ```
