@@ -26,7 +26,7 @@ services:
     depends_on:
       - gopref
     volumes:
-      - ssl:/etc/ssl
+      - ./ssl:/etc/ssl
       - ./gopref-nginx.conf:/etc/nginx/sites-enabled/gopref.conf
     ports:
       - 80:80
