@@ -1,7 +1,5 @@
 # gopref
 
-Switched from Vegeta to [Ali](https://github.com/nakabonne/ali).
-
 ## load-test
 
 ```
@@ -11,7 +9,8 @@ ali
 ## develop
 
 ```
-npm run build
+go build .
+npm run serve
 docker build --tag gopref .
 docker-compose up
 ```
@@ -19,6 +18,7 @@ docker-compose up
 ## deploy
 
 ```
+npm run build
 docker build --tag gopref .
 docker-compose up
 ```
