@@ -20,12 +20,12 @@ services:
       - rabbitmq
     ports:
       - 4000:4000
-  web:
-    image: nginx
-    container_name: nginx
-    depends_on:
-      - gopref
-    volumes:
-      - ~/build/gopref/dist:/usr/share/nginx/html
-    ports:
-      - 8080:80
+  # web:
+  #   image: nginx
+  #   container_name: nginx
+  #   depends_on:
+  #     - gopref
+  #   volumes:
+  #     - ~/build/gopref/dist:/usr/share/nginx/html
+  #   ports:
+  #     - 8080:80
