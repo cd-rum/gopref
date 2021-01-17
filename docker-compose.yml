@@ -29,6 +29,7 @@ services:
       - ./ssl/advpls.com.pem:/etc/ssl/advpls.com.pem
       - ./ssl/advpls.com.key:/etc/ssl/advpls.com.key
       - ./gopref-nginx.conf:/etc/nginx/nginx.conf
+      - ./dist:/home/gopref/dist
     ports:
       - 80:80
       - 443:443
