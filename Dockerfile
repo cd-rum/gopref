@@ -15,8 +15,8 @@ COPY . /app
 WORKDIR /app
 
 RUN go get -d ./...
-RUN CGO_ENABLED=0 go build -o /bin/gopref
+RUN CGO_ENABLED=0 go build -o /app/gopref
 RUN chmod +x /app/python/* && \
     python /app/python/import_or_install.py
 
-ENTRYPOINT ["/bin/gopref"]
+ENTRYPOINT ["/app/gopref"]
