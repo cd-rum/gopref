@@ -20,6 +20,8 @@ services:
       - rabbitmq
     ports:
       - 4000:4000
+    volumes:
+      - ./tmp:tmp
   web:
     image: nginx
     container_name: nginx
