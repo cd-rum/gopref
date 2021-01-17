@@ -18,8 +18,8 @@ services:
     restart: on-failure
     depends_on:
       - rabbitmq
-    expose:
-      - 4000
+    ports:
+      - 4000:4000
   web:
     image: nginx
     container_name: nginx
