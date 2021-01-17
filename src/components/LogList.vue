@@ -44,9 +44,6 @@
     name: 'LogList',
     data () {
       return {
-        api: axios.create({
-          baseURL: 'http://localhost:4000'
-        }),
         document: {},
         logs: [],
         stats: {}
@@ -60,7 +57,7 @@
     },
     methods: {
       getLogList () {
-        this.api.get('/api/logs')
+        axios.get('/api/logs')
         .then(res => {
           if (res.data) this.logs = res.data.reverse()
           else this.logs = []
@@ -70,7 +67,7 @@
         })
       },
       getStats () {
-        this.api.get('/api/stats')
+        axios.get('/api/stats')
         .then(res => {
           this.stats = res.data
         })
