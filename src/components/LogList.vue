@@ -57,7 +57,7 @@
     },
     methods: {
       getLogList () {
-        axios.get('http://127.0.0.1:4000/api/logs')
+        axios.get('/api/logs')
         .then(res => {
           if (res.data) this.logs = res.data.reverse()
           else this.logs = []
@@ -67,7 +67,7 @@
         })
       },
       getStats () {
-        axios.get('http://127.0.0.1:4000/api/stats')
+        axios.get('/api/stats')
         .then(res => {
           this.stats = res.data
         })
