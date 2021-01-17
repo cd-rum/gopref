@@ -18,8 +18,8 @@ services:
     restart: on-failure
     depends_on:
       - rabbitmq
-    ports:
-      - 4000:4000
+    expose:
+      - 4000
   web:
     image: nginx
     container_name: nginx
@@ -31,5 +31,4 @@ services:
       - ./gopref-nginx.conf:/etc/nginx/nginx.conf
       - ./dist:/home/gopref/dist
     ports:
-      - 80:80
       - 443:443
