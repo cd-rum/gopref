@@ -18,8 +18,8 @@ services:
     restart: on-failure
     depends_on:
       - rabbitmq
-    ports:
-      - 4000:4000
+    expose:
+      - 4000
     volumes:
       - ./tmp:/app/tmp
   web:
