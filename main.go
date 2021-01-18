@@ -52,7 +52,7 @@ func panic(msg string, err error) {
 }
 
 var externalConfig = `
-dsn: "amqp://guest:guest@172.19.0.2:5672/"
+dsn: "amqp://guest:guest@172.20.0.2:5672/"
 reconnect_delay: 5s
 exchanges:
   - name: "gopref_env"
