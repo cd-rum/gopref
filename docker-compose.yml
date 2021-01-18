@@ -12,6 +12,9 @@ services:
       interval: 5s
       timeout: 15s
       retries: 1
+    networks:
+      gopref:
+        ipv4_address: 10.1.0.100
   gopref:
     image: gopref
     container_name: gopref
@@ -22,6 +25,9 @@ services:
       - 4000
     volumes:
       - ./tmp:/app/tmp
+    networks:
+      gopref:
+        ipv4_address: 10.1.0.101
   web:
     image: nginx
     container_name: nginx
@@ -34,3 +40,13 @@ services:
       - ./dist:/home/gopref/dist
     ports:
       - 443:443
+    networks:
+      gopref:
+        ipv4_address: 10.1.0.102
+networks:
+  gopref:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.1.0.0/24
