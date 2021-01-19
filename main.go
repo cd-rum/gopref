@@ -126,6 +126,8 @@ func remove(s []string, r string) []string {
 }
 
 func main() {
+  log.SetOutput(os.Stdout)
+
   writeFontsIndex()
 
   var config mq.Config
@@ -156,7 +158,6 @@ func main() {
     }
 
     fmt.Printf(string(out))
-    fmt.Fprintf(os.Stderr, string(out))
     logfile := fmt.Sprintf("tmp/log/%s.log", s)
     writeLog(logfile, string(out))
 
