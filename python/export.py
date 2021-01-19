@@ -480,11 +480,14 @@ def main(argv):
   high.save()
 
   upload(low_path, low_key, high_path, high_key)
-  shutil.rmtree(os.path.dirname(low_path))
+
+  print "[written] {0}, {1}".format(low_path, high_path)
+
   result = { 'pdf_result': {
     'press_ready_url': high_key, 'low_resolution_url': low_key,
     'error_code': None, 'created': True
   } }
+
   req = urllib2.Request("{0}/api/v4/documents/{1}/".format(DOMAIN, document_id))
   req.get_method = lambda: 'PATCH'
   req.add_header('Authorization', "Bearer {0}".format(token))
