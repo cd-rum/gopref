@@ -85,7 +85,7 @@ consumers:
 `
 
 func writeFontsIndex() {
-  cmd := exec.Command("xvfb-run", "-a", "scribus-ng", "-g", "-ns", "-py", "python/fonts.py")
+  cmd := exec.Command("xvfb-run", "-a", "scribus-ng", "-g", "-ns", "-py", "/app/python/fonts.py")
 
   out, err := cmd.CombinedOutput()
   if err != nil {
@@ -152,7 +152,7 @@ func main() {
     log.Println(s)
 
     queue = append(queue, s)
-    cmd := exec.Command("xvfb-run", "-a", "scribus-ng", "-ns", "-py", "python/export.py", s)
+    cmd := exec.Command("xvfb-run", "-a", "scribus-ng", "-ns", "-py", "/app/python/export.py", s)
 
     out, err := cmd.CombinedOutput()
     if err != nil {
