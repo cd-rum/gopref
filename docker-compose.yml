@@ -13,7 +13,7 @@ services:
       timeout: 15s
       retries: 1
     networks:
-      gopref:
+      gpnet:
         ipv4_address: 10.1.0.100
   gopref:
     image: gopref
@@ -26,7 +26,7 @@ services:
     volumes:
       - ./tmp:/app/tmp
     networks:
-      gopref:
+      gpnet:
         ipv4_address: 10.1.0.101
   web:
     image: nginx
@@ -41,10 +41,10 @@ services:
     ports:
       - 443:443
     networks:
-      gopref:
+      gpnet:
         ipv4_address: 10.1.0.102
 networks:
-  gopref:
+  gpnet:
     driver: bridge
     ipam:
       driver: default
