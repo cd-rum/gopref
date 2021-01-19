@@ -37,6 +37,7 @@ services:
 networks:
   gpnet:
     driver: bridge
+    external: true
     ipam:
       driver: default
       config:
