@@ -3,13 +3,7 @@ FROM ubuntu:focal
 ENV DEBIAN_FRONTEND noninteractive
 ENV TZ Australia/Melbourne
 
-ARG USER_ID
-ARG GROUP_ID
-
-RUN addgroup --gid $GROUP_ID gpuser
-RUN adduser --disabled-password --gecos '' --uid $USER_ID --gid $GROUP_ID gpuser
-
-USER gpuser
+USER 1000:1000
 
 RUN apt-get update && \
     apt install -y --no-install-recommends software-properties-common
