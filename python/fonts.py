@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-print "getting fonts..."
+print "Checking fonts..."
 
 from scribus import *
 
