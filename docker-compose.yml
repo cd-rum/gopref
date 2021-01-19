@@ -11,7 +11,7 @@ services:
       gp:
         ipv4_address: 10.1.0.100
   gopref:
-    image: gopref
+    build: .
     container_name: gopref
     restart: on-failure
     expose:
