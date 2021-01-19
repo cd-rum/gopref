@@ -8,7 +8,7 @@ RUN apt-get update && \
 
 RUN add-apt-repository universe && \
     apt update && \
-    apt install -y --no-install-recommends python2 python-setuptools scribus xvfb golang git curl && \
+    apt install -y --no-install-recommends python2 python-setuptools scribus xvfb golang git curl unzip && \
     mkdir /app
 
 COPY . /app
