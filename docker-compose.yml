@@ -17,6 +17,8 @@ services:
     restart: on-failure
     expose:
       - 4000
+    env_file:
+      - env
     networks:
       gp:
         ipv4_address: 10.1.0.101

@@ -24,6 +24,4 @@ RUN go get -d ./... && \
     CGO_ENABLED=0 go build -o /app/gopref && \
     bash /app/start.sh
 
-RUN source /app/env
-
 CMD ["bash"]
