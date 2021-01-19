@@ -127,7 +127,7 @@ func remove(s []string, r string) []string {
 
 func main() {
   log.SetOutput(os.Stdout)
-  log.Println("golang up bb")
+  log.Println("Gopref up bb")
 
   writeFontsIndex()
 
@@ -158,7 +158,7 @@ func main() {
       return
     }
 
-    fmt.Printf(string(out))
+    log.Println(string(out))
     logfile := fmt.Sprintf("tmp/log/%s.log", s)
     writeLog(logfile, string(out))
 
