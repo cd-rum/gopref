@@ -11,11 +11,11 @@ RUN add-apt-repository universe && \
     apt install -y --no-install-recommends python2 python-setuptools scribus xvfb golang git curl && \
     mkdir /app
 
-RUN git clone https://github.com/cd-rum/prefect-resources && \
-    bash prefect-resources/install.sh
-
 COPY . /app
 WORKDIR /app
+
+RUN git clone https://github.com/cd-rum/prefect-resources
+RUN /app/prefect-resources/install.sh
 
 RUN curl https://bootstrap.pypa.io/get-pip.py --output get-pip.py && \
     python2 get-pip.py
