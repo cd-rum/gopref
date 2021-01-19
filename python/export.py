@@ -17,6 +17,8 @@ import urllib2
 import uuid
 import import_or_install as imp
 
+print "Imported python defaults"
+
 imp.import_or_install("beautifulsoup4")
 imp.import_or_install("boto3")
 imp.import_or_install("botocore")
