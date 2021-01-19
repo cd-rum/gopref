@@ -156,7 +156,7 @@ func main() {
 
     out, err := cmd.CombinedOutput()
     if err != nil {
-      fmt.Println(fmt.Sprint(err) + ": " + string(out))
+      log.Println(fmt.Sprint(err) + ": " + string(out))
       return
     }
 
