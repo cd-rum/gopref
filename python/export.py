@@ -20,17 +20,14 @@ import import_or_install as imp
 
 print "Imported python defaults"
 
-imp.import_or_install("beautifulsoup4")
-imp.import_or_install("boto3")
-imp.import_or_install("botocore")
-imp.import_or_install("dotmap")
-
 import boto3
 import botocore
 
 from bs4 import BeautifulSoup
 from dotmap import DotMap
 from xml.etree import ElementTree as et
+
+print "Imported pip packages"
 
 command = shlex.split("env -i sh -c 'source .env'")
 proc = subprocess.Popen(command, stdout = subprocess.PIPE)
@@ -39,6 +36,8 @@ for line in proc.stdout:
   (key, _, value) = line.partition("=")
   os.environ[key] = value
 proc.communicate()
+
+print "Imported env vars"
 
 DOMAIN = os.environ['APLUS_DOMAIN']
 EMAIL = os.environ['APLUS_USER']

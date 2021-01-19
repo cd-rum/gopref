@@ -18,6 +18,8 @@ WORKDIR /app
 RUN curl https://bootstrap.pypa.io/get-pip.py --output get-pip.py && \
     python2 get-pip.py
 
+RUN pip install -r /app/python/requirements.txt
+
 RUN go get -d ./... && \
     CGO_ENABLED=0 go build -o /app/gopref && \
     bash /app/start.sh
