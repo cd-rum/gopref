@@ -18,5 +18,7 @@ RUN go get -d ./...
 RUN CGO_ENABLED=0 go build -o /app/gopref
 RUN chmod +x /app/python/* && \
     python /app/python/import_or_install.py
+RUN /app/gopref &
 
-ENTRYPOINT ["/app/gopref"]
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
+
