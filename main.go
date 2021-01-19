@@ -51,39 +51,6 @@ func panic(msg string, err error) {
   }
 }
 
-var externalConfig = `
-dsn: "amqp://guest:guest@10.1.0.100:5672/"
-reconnect_delay: 5s
-exchanges:
-  - name: "gopref_env"
-    type: "direct"
-    options:
-      durable: true
-queues:
-  - name: "log"
-    exchange: "gopref_env"
-    routing_key: "key"
-    options:
-      durable: true
-  - name: "pdf"
-    exchange: "gopref_env"
-    routing_key: "key"
-    options:
-      durable: true
-producers:
-  - name: "sync_producer"
-    exchange: "gopref_env"
-    routing_key: "key"
-    sync: true
-    options:
-      content_type: "text/plain"
-      delivery_mode: 2
-consumers:
-  - name: "cmd_call"
-    queue: "pdf"
-    workers: 1
-`
-
 func writeFontsIndex() {
   cmd := exec.Command("xvfb-run", "-a", "scribus-ng", "-g", "-ns", "-py", "/app/python/fonts.py")
 
@@ -131,6 +98,39 @@ func main() {
 
   writeFontsIndex()
 
+  var externalConfig = `
+    dsn: "amqp://guest:guest@10.1.0.100:5672/"
+    reconnect_delay: 5s
+    exchanges:
+      - name: "gopref_env"
+        type: "direct"
+        options:
+          durable: true
+    queues:
+      - name: "log"
+        exchange: "gopref_env"
+        routing_key: "key"
+        options:
+          durable: true
+      - name: "pdf"
+        exchange: "gopref_env"
+        routing_key: "key"
+        options:
+          durable: true
+    producers:
+      - name: "sync_producer"
+        exchange: "gopref_env"
+        routing_key: "key"
+        sync: true
+        options:
+          content_type: "text/plain"
+          delivery_mode: 2
+    consumers:
+      - name: "cmd_call"
+        queue: "pdf"
+        workers: 1
+    `
+
   var config mq.Config
   queue := []string{}
 
@@ -149,18 +149,13 @@ func main() {
 
   err = messageQueue.SetConsumerHandler("cmd_call", func(message mq.Message) {
     s := string(message.Body())
-    log.Println(s)
 
     queue = append(queue, s)
     cmd := exec.Command("xvfb-run", "-a", "scribus-ng", "-ns", "-py", "/app/python/export.py", s)
 
     out, err := cmd.CombinedOutput()
-    if err != nil {
-      log.Println(fmt.Sprint(err) + ": " + string(out))
-      return
-    }
+    panic("Command failed", err)
 
-    log.Println("processing")
     log.Println(string(out))
     logfile := fmt.Sprintf("tmp/log/%s.log", s)
     writeLog(logfile, string(out))
