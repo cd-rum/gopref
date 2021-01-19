@@ -16,8 +16,6 @@ services:
     restart: on-failure
     expose:
       - 4000
-    volumes:
-      - ./tmp:/app/tmp
     networks:
       gp:
         ipv4_address: 10.1.0.101
