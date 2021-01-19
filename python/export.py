@@ -9,10 +9,8 @@ import pprint
 import re
 import setuptools
 import scribus
-import shlex
 import shutil
 import struct
-import subprocess
 import sys
 import urllib2
 import uuid
@@ -27,16 +25,6 @@ from dotmap import DotMap
 from xml.etree import ElementTree as et
 
 print "Imported pip packages"
-
-command = shlex.split("env -i sh -c 'source .env'")
-proc = subprocess.Popen(command, stdout = subprocess.PIPE)
-
-for line in proc.stdout:
-  (key, _, value) = line.partition("=")
-  os.environ[key] = value
-proc.communicate()
-
-print "Imported env vars"
 
 DOMAIN = os.environ['APLUS_DOMAIN']
 EMAIL = os.environ['APLUS_USER']
