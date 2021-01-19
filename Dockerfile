@@ -20,7 +20,6 @@ RUN curl https://bootstrap.pypa.io/get-pip.py --output get-pip.py && \
 
 RUN go get -d ./... && \
     CGO_ENABLED=0 go build -o /app/gopref && \
-    python2 /app/python/import_or_install.py && \
     bash /app/start.sh
 
 CMD ["bash"]
