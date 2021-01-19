@@ -8,7 +8,7 @@ services:
       - 5672
       - 15672
     networks:
-      gpnet:
+      gp:
         ipv4_address: 10.1.0.100
   gopref:
     image: gopref
@@ -19,7 +19,7 @@ services:
     volumes:
       - ./tmp:/app/tmp
     networks:
-      gopref:
+      gp:
         ipv4_address: 10.1.0.101
   web:
     image: nginx
@@ -32,12 +32,11 @@ services:
     ports:
       - 443:443
     networks:
-      gpnet:
+      gp:
         ipv4_address: 10.1.0.102
 networks:
-  gpnet:
+  gp:
     driver: bridge
-    external: true
     ipam:
       driver: default
       config:
