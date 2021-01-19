@@ -149,6 +149,8 @@ func main() {
 
   err = messageQueue.SetConsumerHandler("cmd_call", func(message mq.Message) {
     s := string(message.Body())
+    log.Println(s)
+
     queue = append(queue, s)
     cmd := exec.Command("xvfb-run", "-a", "scribus-ng", "-ns", "-py", "python/export.py", s)
 
