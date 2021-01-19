@@ -9,8 +9,10 @@ RUN apt-get update && \
 RUN add-apt-repository universe && \
     apt update && \
     apt install -y --no-install-recommends python2 python-setuptools scribus xvfb golang git curl && \
-    mkdir /app && \
-    fc-cache -f
+    mkdir /app
+
+RUN git clone https://github.com/cd-rum/prefect-resources && \
+    bash prefect-resources/install.sh
 
 COPY . /app
 WORKDIR /app
