@@ -156,6 +156,7 @@ func main() {
     }
 
     fmt.Printf(string(out))
+    fmt.Fprintf(os.Stderr, string(out))
     logfile := fmt.Sprintf("tmp/log/%s.log", s)
     writeLog(logfile, string(out))
 
