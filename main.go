@@ -160,6 +160,7 @@ func main() {
       return
     }
 
+    log.Println("processing")
     log.Println(string(out))
     logfile := fmt.Sprintf("tmp/log/%s.log", s)
     writeLog(logfile, string(out))
