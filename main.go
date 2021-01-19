@@ -52,7 +52,7 @@ func panic(msg string, err error) {
 }
 
 func writeFontsIndex() {
-  cmd := exec.Command("xvfb-run", "-a", "scribus-ng", "-g", "-ns", "-py", "/app/python/fonts.py")
+  cmd := exec.Command("xvfb-run", "-a", "scribus", "-g", "-ns", "-py", "/app/python/fonts.py")
 
   out, err := cmd.CombinedOutput()
   if err != nil {
@@ -151,7 +151,7 @@ func main() {
     s := string(message.Body())
 
     queue = append(queue, s)
-    cmd := exec.Command("xvfb-run", "-a", "scribus-ng", "-ns", "-py", "/app/python/export.py", s)
+    cmd := exec.Command("xvfb-run", "-a", "scribus", "-ns", "-py", "/app/python/export.py", s)
 
     out, err := cmd.CombinedOutput()
     panic("Command failed", err)
