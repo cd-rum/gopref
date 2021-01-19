@@ -2,6 +2,6 @@
 
 sudo docker-compose down --rmi all -v && \
   sudo docker-compose build --no-cache && \
-  sudo docker-compose up -d --force-recreate
+  sudo UID=${UID} GID=${GID} docker-compose up -d --force-recreate
 
 
