@@ -127,6 +127,7 @@ func remove(s []string, r string) []string {
 
 func main() {
   log.SetOutput(os.Stdout)
+  log.Println("golang up bb")
 
   writeFontsIndex()
 
