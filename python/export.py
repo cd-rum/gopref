@@ -7,6 +7,7 @@ import os
 import pdb
 import pprint
 import re
+import setuptools
 import scribus
 import shlex
 import shutil
