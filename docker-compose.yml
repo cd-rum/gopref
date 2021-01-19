@@ -19,20 +19,16 @@ services:
     image: gopref
     container_name: gopref
     restart: on-failure
-    depends_on:
-      - rabbitmq
     expose:
       - 4000
     volumes:
       - ./tmp:/app/tmp
     networks:
-      gpnet:
+      gopref:
         ipv4_address: 10.1.0.101
   web:
     image: nginx
     container_name: nginx
-    depends_on:
-      - gopref
     volumes:
       - ./ssl/advpls.com.pem:/etc/ssl/advpls.com.pem
       - ./ssl/advpls.com.key:/etc/ssl/advpls.com.key
