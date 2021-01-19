@@ -15,7 +15,6 @@ services:
     container_name: gopref
     command: /app/gopref
     restart: on-failure
-    user: 1000:1000
     expose:
       - 4000
     env_file:
