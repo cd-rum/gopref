@@ -16,7 +16,6 @@ import subprocess
 import sys
 import urllib2
 import uuid
-import import_or_install as imp
 
 print "Imported python defaults"
 
