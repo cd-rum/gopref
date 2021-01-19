@@ -14,9 +14,6 @@ RUN add-apt-repository universe && \
 COPY . /app
 WORKDIR /app
 
-RUN git clone https://github.com/cd-rum/prefect-resources
-RUN /app/prefect-resources/install.sh
-
 RUN curl https://bootstrap.pypa.io/get-pip.py --output get-pip.py && \
     python2 get-pip.py
 
