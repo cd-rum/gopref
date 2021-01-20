@@ -187,7 +187,7 @@ func main() {
 
   // logs
   mux.HandleFunc("/api/logs", func(w http.ResponseWriter, r *http.Request) {
-    files, err := ioutil.ReadDir("tmp/log")
+    files, err := ioutil.ReadDir("/app/tmp/log")
     panic("Can't read log dir", err)
 
     var logs []*LogFile
