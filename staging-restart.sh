@@ -2,4 +2,4 @@
 
 sudo docker-compose down --rmi all -v && \
   sudo docker-compose build --no-cache && \
-  sudo docker-compose up -d --force-recreate
+  sudo docker-compose -f staging-docker-compose.yml up -d --force-recreate

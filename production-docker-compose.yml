@@ -1,0 +1,44 @@
+version: '3'
+services:
+  rabbitmq:
+    image: rabbitmq
+    container_name: rabbitmq
+    command: rabbitmq-server
+    expose:
+      - 5672
+      - 15672
+    networks:
+      gp:
+        ipv4_address: 10.1.0.100
+  gopref:
+    build: .
+    container_name: gopref
+    command: /app/gopref
+    restart: on-failure
+    expose:
+      - 4000
+    env_file:
+      - env
+    networks:
+      gp:
+        ipv4_address: 10.1.0.101
+  web:
+    image: nginx
+    container_name: nginx
+    volumes:
+      - ./ssl/advpls.com.pem:/etc/ssl/advpls.com.pem
+      - ./ssl/advpls.com.key:/etc/ssl/advpls.com.key
+      - ./production-nginx.conf:/etc/nginx/nginx.conf
+      - ./dist:/home/gopref/dist
+    ports:
+      - 443:443
+    networks:
+      gp:
+        ipv4_address: 10.1.0.102
+networks:
+  gp:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.1.0.0/24

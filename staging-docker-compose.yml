@@ -28,7 +28,7 @@ services:
     volumes:
       - ./ssl/advpls.com.pem:/etc/ssl/advpls.com.pem
       - ./ssl/advpls.com.key:/etc/ssl/advpls.com.key
-      - ./gopref-nginx.conf:/etc/nginx/nginx.conf
+      - ./staging-nginx.conf:/etc/nginx/nginx.conf
       - ./dist:/home/gopref/dist
     ports:
       - 443:443
