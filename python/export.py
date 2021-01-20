@@ -15,16 +15,12 @@ import sys
 import urllib2
 import uuid
 
-print "Imported python defaults"
-
 import boto3
 import botocore
 
 from bs4 import BeautifulSoup
 from dotmap import DotMap
 from xml.etree import ElementTree as et
-
-print "Imported pip packages"
 
 DOMAIN = os.environ['APLUS_DOMAIN']
 EMAIL = os.environ['APLUS_USER']
@@ -252,7 +248,6 @@ def main(argv):
   document = DotMap(json_resp).document
   resource_size = 0
   document_file = json.loads(resp)
-  print document_file
 
   json_file = "json/{0}.json".format(document_id)
   json_file_path = os.path.join(TEMP_PATH, json_file)
