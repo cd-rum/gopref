@@ -83,7 +83,8 @@
         return str.split('/')[2].split('.')[0]
       },
       formatOutput (str) {
-        return str
+        if (str.includes('[pdf]')) return str.split('[pdf]')[1]
+        else return 'Failed to send'
       },
       formatProduction (arr) {
         if (arr && arr.length > 0) return arr.join(', ')
