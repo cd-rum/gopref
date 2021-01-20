@@ -11,5 +11,3 @@ mkdir -p /app/tmp/sla
 mkdir -p /usr/share/fonts/truetype/helvetica
 unzip "/app/src.zip" -d /usr/share/fonts/truetype/helvetica
 fc-cache -fv
-
-python2 /app/python/user.py

@@ -68,7 +68,7 @@ def download_img(key):
 
 def download_eps(eps):
   new_file = os.path.join(TEMP_PATH, eps.filename)
-  # if os.path.isfile(new_file): return new_file
+  if os.path.isfile(new_file): return new_file
 
   make_dirs(new_file)
   S3_RESOURCE.meta.client.download_file(BUCKET, eps.key, new_file)
@@ -251,8 +251,8 @@ def main(argv):
   json_resp = byteify(json.loads(resp))
   document = DotMap(json_resp).document
   resource_size = 0
-
   document_file = json.loads(resp)
+  print document_file
 
   json_file = "json/{0}.json".format(document_id)
   json_file_path = os.path.join(TEMP_PATH, json_file)
@@ -480,8 +480,6 @@ def main(argv):
   high.save()
 
   upload(low_path, low_key, high_path, high_key)
-
-  print "[written] {0}, {1}".format(low_path, high_path)
 
   result = { 'pdf_result': {
     'press_ready_url': high_key, 'low_resolution_url': low_key,
