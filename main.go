@@ -157,7 +157,7 @@ func main() {
     panic("Command failed", err)
 
     log.Println(string(out))
-    logfile := fmt.Sprintf("tmp/log/%s.log", s)
+    logfile := fmt.Sprintf("/app/tmp/log/%s.log", s)
     writeLog(logfile, string(out))
 
     queue = remove(queue, s)
@@ -192,7 +192,7 @@ func main() {
 
     var logs []*LogFile
     for _, file := range files {
-      filepath := fmt.Sprintf("tmp/log/%s", file.Name())
+      filepath := fmt.Sprintf("/app/tmp/log/%s", file.Name())
       file, err := os.Open(filepath)
       panic("No log file", err)
 
