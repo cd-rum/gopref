@@ -361,8 +361,9 @@ def main(argv):
             var_len = len(new_html)
             designator_len = len(formatted_designator(var))
 
+            # testing to see if -1 is needed two lines down
             if var.variable_style:
-              select_text(min(0, frame_len - var_len), min(frame_len, var_len - tag_len - 1), key)
+              select_text(min(0, frame_len - var_len), min(frame_len, var_len - tag_len), key)
               stylise(var.variable_style, key, FONTS)
 
             for i in indicies:
