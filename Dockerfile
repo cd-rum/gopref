@@ -14,8 +14,7 @@ RUN add-apt-repository universe && \
 COPY . /app
 WORKDIR /app
 
-RUN curl https://bootstrap.pypa.io/2.6/get-pip.py -o get-pip.py && \
-    python2 get-pip.py
+RUN python2 get-pip.py
 
 RUN pip install -r /app/python/requirements.txt
 
