@@ -347,12 +347,12 @@ def main(argv):
               inner_text_len = len(inner_text)
 
               # adds the cursor position
+              print 'bolding {0} ({1} chars)'.format(inner_text, inner_text_len)
               for el in tag.previous_siblings:
-                print el.string
-                print '---start---'
+                print 'previous strings: {0}'.format(el.string)
                 print len(el.string)
                 print len(repr(el.string))
-                print '---end---'
+                print ''
                 cursor = cursor + len(repr(el.string))
 
               indicies.append([cursor, inner_text_len])
@@ -396,7 +396,7 @@ def main(argv):
               apply_font(FONTS, 'Helvetica Neue LT Std 75 Bold', key)
 
             if var.html_tag == 'strong':
-              select_text(0, min(frame_len, var_len), key)
+              select_text(0, -1, key)
               apply_font(FONTS, 'Helvetica Neue LT Std 75 Bold', key)
 
         elif var.html_tag == 'img' and var.body:
