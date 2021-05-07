@@ -348,12 +348,12 @@ def main(argv):
 
               # adds the cursor position
               for el in tag.previous_siblings:
-                print el.string
-                print '---start---'
-                print len(el.string)
-                print len(repr(el.string))
-                print '---end---'
-                cursor = cursor + len(repr(el.string))
+                # print el.string
+                # print '---start---'
+                # print len(el.string)
+                # print len(repr(el.string))
+                # print '---end---'
+                cursor = cursor + len(el.string)
 
               indicies.append([cursor, inner_text_len])
               print '{0} {1}'.format(cursor, inner_text_len)
