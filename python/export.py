@@ -337,7 +337,7 @@ def main(argv):
 
           # within html
           if soup.b:
-            print 'SOUP B {0}'.format(soup.b)
+            print html
             indicies = []
             tag_len = 3
 
