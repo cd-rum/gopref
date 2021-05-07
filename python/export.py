@@ -349,12 +349,13 @@ def main(argv):
               # adds the cursor position
               print 'bold: {0} ({1} chars)'.format(inner_text, inner_text_len)
               for el in tag.previous_siblings:
+                cursor = cursor + len(repr(el.string))
+                print 'str: {0}'.format(el.string)
                 print 'len: {0}'.format(len(el.string))
                 print 'repr: {0}'.format(len(repr(el.string)))
-                cursor = cursor + len(repr(el.string))
+                print 'curs: {0}'.format(cursor)
 
               indicies.append([cursor, inner_text_len])
-              print '{0} {1}'.format(cursor, inner_text_len)
               cursor = cursor + inner_text_len
               tag.replace_with(inner_text)
 
