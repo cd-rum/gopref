@@ -348,12 +348,12 @@ def main(argv):
 
               # adds the cursor position
               print 'bolding {0} ({1} chars)'.format(inner_text, inner_text_len)
-              for el in tag.previous_siblings:
-                print 'previous strings: {0}'.format(el.string)
+              for el, i in tag.previous_siblings:
+                print 'previous strings: {0} {1}'.format(el.string, i)
                 print len(el.string)
                 print len(repr(el.string))
                 print ''
-                cursor = cursor + len(repr(el.string))
+                cursor = len(repr(el.string))
 
               indicies.append([cursor, inner_text_len])
               print '{0} {1}'.format(cursor, inner_text_len)
