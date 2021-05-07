@@ -367,8 +367,7 @@ def main(argv):
               stylise(var.variable_style, key, FONTS)
 
             for i in indicies:
-              print 'bolding {0} to {1}'.format(i[0], i[1])
-              select_text(i[0] - i[1], i[1], key)
+              select_text(i[0] - i[1] - i[1], i[1], key)
               apply_font(FONTS, 'Helvetica Neue LT Std 75 Bold', key)
 
             if designator_len > 0:
