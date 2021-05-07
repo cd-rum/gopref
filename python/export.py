@@ -353,7 +353,7 @@ def main(argv):
                 print len(el.string)
                 print len(repr(el.string))
                 print ''
-                cursor = len(repr(el.string))
+                cursor = 0 + len(repr(el.string))
 
               indicies.append([cursor, inner_text_len])
               print '{0} {1}'.format(cursor, inner_text_len)
