@@ -339,16 +339,17 @@ def main(argv):
           if soup.b:
             print 'SOUP B {0}'.format(soup.b)
             indicies = []
-            cursor = 0
             tag_len = 3
 
             for tag in soup.find_all('b'):
+              cursor = 0
               inner_text = tag.string.extract()
               inner_text_len = len(inner_text)
 
               # adds the cursor position
               for el in tag.previous_siblings:
                 print el.string
+                print len(el.string)
                 cursor = cursor + len(repr(el.string))
 
               indicies.append([cursor, inner_text_len])
