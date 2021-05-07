@@ -347,7 +347,9 @@ def main(argv):
               inner_text_len = len(inner_text)
 
               # adds the cursor position
-              for el in tag.previous_siblings: cursor = cursor + len(repr(el.string))
+              for el in tag.previous_siblings:
+                print el.string
+                cursor = cursor + len(repr(el.string))
 
               indicies.append([cursor, inner_text_len])
               print '{0} {1}'.format(cursor, inner_text_len)
