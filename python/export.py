@@ -260,7 +260,7 @@ def main(argv):
   low_path = os.path.join(TEMP_PATH, low_key)
   high_path = os.path.join(TEMP_PATH, high_key)
   sla_path = os.path.join(TEMP_PATH, "sla/{0}_{1}.sla".format(document_id, HEX))
-  offset_on_first = filter(lambda f: f.content_type == 'component_offset' and f.page_number == 1, document.frames)
+  cursor_on_first = filter(lambda f: f.content_type == 'component_cursor' and f.page_number == 1, document.frames)
 
   if document.template_page_size_preset.startswith('PAPER'):
     scribus.newDocument(
@@ -306,7 +306,7 @@ def main(argv):
 
   scribus.saveDoc()
 
-  if len(offset_on_first) > 0:
+  if len(cursor_on_first) > 0:
     scribus.newPage(1)
     scribus.applyMasterPage('MASTER', 1)
     delete_excess_pages(document.total_pages)
@@ -339,21 +339,20 @@ def main(argv):
           if soup.b:
             print 'SOUP B {0}'.format(soup.b)
             indicies = []
-            offset = 0
-            tag_count = 0
-            tag_len = (len('b') + 2)
+            cursor = 0
+            tag_len = 3
 
             for tag in soup.find_all('b'):
-              tag_count = tag_count + 1
-              temp_str = tag.string.extract()
-              str_len = len(temp_str)
+              inner_text = tag.string.extract()
+              inner_text_len = len(inner_text)
 
-              for el in tag.previous_siblings: offset = offset + len(repr(el.string))
+              # adds the cursor position
+              for el in tag.previous_siblings: cursor = cursor + len(repr(el.string))
 
-              offset = offset + tag_len
-              indicies.append([offset, str_len])
-              offset = offset + str_len
-              tag.replace_with(temp_str)
+              indicies.append([cursor, inner_text_len])
+              print '{0} {1}'.format(cursor, inner_text_len)
+              cursor = cursor + inner_text_len
+              tag.replace_with(inner_text)
 
             new_html = str(soup)
             scribus.insertText(new_html, -1, key)
@@ -367,7 +366,7 @@ def main(argv):
               stylise(var.variable_style, key, FONTS)
 
             for i in indicies:
-              select_text(i[0] - i[1] - i[1], i[1], key)
+              select_text(i[0] - i[1], i[1], key)
               apply_font(FONTS, 'Helvetica Neue LT Std 75 Bold', key)
 
             if designator_len > 0:
