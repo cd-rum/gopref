@@ -347,12 +347,12 @@ def main(argv):
               inner_text_len = len(inner_text)
 
               # adds the cursor position
-              print 'bolding {0} ({1} chars)'.format(inner_text, inner_text_len)
+              print 'bold: {0} ({1} chars)'.format(inner_text, inner_text_len)
               for el in tag.previous_siblings:
-                print 'previous strings: {0}'.format(el.string)
-                print len(el.string)
-                print len(repr(el.string))
-                cursor = len(repr(el.string))
+                print 'prev: {0}'.format(len(tag.previous_siblings))
+                print 'len: {0}'.format(len(el.string))
+                print 'repr: {0}'.format(len(repr(el.string)))
+                cursor = cursor + len(repr(el.string))
 
               indicies.append([cursor, inner_text_len])
               print '{0} {1}'.format(cursor, inner_text_len)
